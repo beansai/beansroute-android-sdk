@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/attemptedButtonContainer"
+    android:layout_width="143dp"
+    android:layout_height="88.5dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card_action_button_unselected">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/unselected_container"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:id="@+id/x_mark_red"
+            android:background="@drawable/x"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_container"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="18dp"
+            android:id="@+id/x_mark_white"
+            android:background="@drawable/x_white"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+</RelativeLayout>

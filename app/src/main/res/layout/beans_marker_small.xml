@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="54dp"
+    android:id="@+id/markerContainer"
+    android:background="@color/transparent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:background="@drawable/bg_beans_marker_small"
+            android:id="@+id/container">
+            <RelativeLayout
+                android:layout_width="39dp"
+                android:layout_height="match_parent"
+                android:id="@+id/leftImageContainer"
+                android:orientation="horizontal"
+                android:background="@color/colorBlue"
+                android:layout_alignParentLeft="true">
+
+                <ImageView
+                    android:id="@+id/leftImage"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_centerInParent="true"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="15dp"
+        android:layout_height="12dp"
+        android:id="@+id/markerPointer"
+        android:layout_below="@+id/container"
+        android:layout_centerHorizontal="true">
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mapWidgetContainer"
+            android:visibility="gone">
+            <ai.beans.common.maps.mapproviders.BeansMapGoogleImpl
+                android:id="@+id/embedded_map_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                map:cameraTargetLat="-33.796923"
+                map:cameraTargetLng="150.922433"
+                />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/offlineMapWidgetContainer"
+            android:visibility="gone">
+            <ai.beans.common.maps.mapproviders.BeansMapOSMImpl
+                android:id="@+id/embedded_map_view_offline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ai.beans.common.maps.RoundMapButton
+                android:id="@+id/satellite_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                app:button_down_background="@drawable/bg_map_round_button_selected"
+                app:button_down_image="@drawable/satellite_selected"
+                app:button_up_background="@drawable/bg_map_round_button"
+                app:button_up_image="@drawable/satellite" />
+
+            <ai.beans.common.maps.RoundMapButton
+                android:id="@+id/offline_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                app:button_down_background="@drawable/bg_map_round_button_selected"
+                app:button_down_image="@drawable/wifi_selected"
+                app:button_up_background="@drawable/bg_map_round_button"
+                app:button_up_image="@drawable/wifi" />
+
+            <ai.beans.common.maps.RoundMapButton
+                android:id="@+id/location_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                app:button_down_background="@drawable/bg_map_round_button_selected"
+                app:button_down_image="@drawable/mylocation_selected"
+                app:button_up_background="@drawable/bg_map_round_button"
+                app:button_up_image="@drawable/mylocation" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/panelGuideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/panelGuideBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include
+            layout="@layout/location_permission_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!--<RelativeLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+
+        <!--android:background="@color/transparent_grey"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"/>-->
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ai.beans.common.widgets.stops.BeansStopPanelImpl
+        android:id="@+id/containerPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/searchResultIcon"
+            android:background="@drawable/search_suggestion_icon"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/searchResultIcon"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@id/searchResultIcon">
+
+                <LinearLayout
+                    android:id="@+id/society_name_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:id="@+id/society_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:gravity="top"
+                            android:includeFontPadding="false"
+                            android:letterSpacing="-0.01"
+                            android:padding="0dp"
+                            android:text="this is a long piece of text that goes on and on and should wrap at some point"
+                            android:textColor="#0a2239"
+                            android:textSize="15sp"
+                            android:textStyle="normal"
+                            android:visibility="visible"
+ />
+                </LinearLayout>
+
+                <TextView
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/society_name_container"
+                    android:id="@+id/address_string"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="normal"
+                    android:textColor="#0a2239"
+                    android:letterSpacing="-0.01"
+                    android:singleLine="true"
+                    android:gravity="top"
+                    android:padding="0dp"
+                    android:includeFontPadding="false"
+                    android:text="1422 Dale Av"
+                    android:layout_marginTop="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/address_string_2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/address_string"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_string"
+                    android:layout_alignLeft="@+id/address_string"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:textColor="#8e8e93"
+                    android:letterSpacing="-0.02"
+                    />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

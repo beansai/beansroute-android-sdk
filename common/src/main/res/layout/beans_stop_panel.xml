@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/routeCardBackground">
+
+    <ImageButton
+        android:id="@+id/previousStop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="5dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/arrow_left_dark"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/nextStop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="5dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/arrow_right_dark"
+        android:layout_toRightOf="@+id/previousStop"
+        android:visibility="gone"/>
+
+    <ai.beans.common.widgets.stops.BeansStopCardImpl
+        android:id="@+id/stop_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nextStop" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/childStopsContainer"
+        android:layout_below="@+id/stop_card"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        android:background="@color/colorWhite"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/routeListView"
+        android:background="@color/colorBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/childStopsContainer" />
+
+
+</RelativeLayout>

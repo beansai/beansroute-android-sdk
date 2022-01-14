@@ -1,0 +1,20 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+<!--        <item name="android:windowBackground">@color/toolbarBackground</item>-->
+    </style>
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimaryText</item>-->
+<!--        <item name="android:windowBackground">@color/colorWhite</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryText</item>-->
+<!--        <item name="colorAccent">@color/colorPrimaryText</item>-->
+<!--    </style>-->
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+</resources>

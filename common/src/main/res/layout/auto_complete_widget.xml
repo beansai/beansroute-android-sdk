@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+        <ai.beans.common.widgets.autocomplete.BeansAutoCompleteTextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/autocomplete_textView"
+            android:dropDownWidth="match_parent"
+            android:backgroundTint="@color/transparent"
+            android:textSize="17sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#8e8e93"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="5sp"
+            android:hint="Search Location"
+            android:layout_centerVertical="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/clearBtn"
+            android:layout_marginRight="5dp"
+            android:popupBackground="@android:color/transparent"
+            android:singleLine="true"
+            android:padding="0dp"/>
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/clearBtn"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15.7dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="visible">
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/close"
+                    android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="54dp"
+    android:id="@+id/markerContainer"
+    android:background="@color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:id="@+id/container"
+        app:cardCornerRadius="8dp"
+        app:cardPreventCornerOverlap="false">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="39dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:id="@+id/leftImageContainer"
+                android:orientation="horizontal"
+                android:background="@color/colorBlue">
+
+                <ImageView
+                    android:id="@+id/leftImage"
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:layout_centerInParent="true"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/rightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="45dp"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/leftImageContainer"
+                android:text="Test"/>
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="15dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/container"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/marker_pointer">
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorTopBar">#ffffff</color>
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBottomBar">#f5f5f5</color>
+    <color name="colorBlue">#177df7</color>
+    <color name="colorGreen">#00AA00</color>
+    <color name="colorDarkGray">#777777</color>
+    <color name="colorGray">#aaaaaa</color>
+    <color name="transparent_light">#01ffffff</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="transparent_grey">#f0ffffff</color>
+    <color name="btn_color">#595acc</color>
+    <color name="colorPlaceholder">#c4c4c4</color>
+    <color name="mapCardGrey">#f2f2f2</color>
+    <color name="mapCardStatusTextBlue">#007ccf</color>
+    <color name="mapCardStatusTextGrey">#8e8e93</color>
+    <color name="beansDarkBlue">#0a2239</color>
+    <color name="taskRowAddressTextBlack">#131415</color>
+    <color name="supportFragmentBackground">#f7f7f7</color>
+
+    <color name="loginBtnColor">#0a2239</color>
+
+    <color name="StatusTitleBlue">#007ccf</color>
+    <color name="StatusTitleGreen">#2ec4b6</color>
+    <color name="StatusTitleRed">#ee4266</color>
+    <color name="StatusTitleYellow">#ffb20f</color>
+    <color name="StatusTitleGrey">#b2b2b2</color>
+
+    <color name="StatusInfoGrey">#8e8e93</color>
+    <color name="StatusInfoDarkGrey">#494949</color>
+
+    <color name="default_text">#000000</color>
+    <color name="default_hint_text">#999999</color>
+
+    <color name="login_screen_text">#4a4a4a</color>
+    <color name="login_tutorial_blue">#1d7ddb</color>
+    <color name="login_tutorial_pink">#ff6283</color>
+
+    <color name="permission_screen_background">#0a2239</color>
+
+    <color name="info_row_border_shadow">#e6e6e6</color>
+
+    <color name="filter_button_text_color">#676464</color>
+
+    <color name="filter_fragment_text_color">#007aff</color>
+
+    <color name="pull_to_refresh_text_color">#d6d6d6</color>
+
+    <color name="camera_button_grey">#100a2239</color>
+
+    <color name="root_fragment_background">#ffffff</color>
+
+    <color name="toolbarBackground">#FFFFFF</color>
+
+    <color name="infoRowTextColor">#0a2239</color>
+
+    <color name="infoRowBackground">#E6E6E6</color>
+
+    <color name="route_stop_path">#007ccf</color>
+
+    <color name="color_shadow_start">#00000000</color>
+    <color name="color_shadow_end">#4b000000</color>
+
+    <color name="marker_number_optimized_color">#004D80</color>
+
+    <color name="colorStatusBar">#000000</color>
+
+    <color name="navigationBarIconTint">#000000</color>
+    <color name="navigationBarTextColor">#000000</color>
+
+    <color name="colorBottomNavigationBar">#F8F5F5</color>
+    <color name="btnGrey">#8E8E93</color>
+    <color name="routeCardBackground">#ffffff</color>
+    <color name="routeCardPackageInfoBackground">#f6f6f6</color>
+    <color name="stopListFragmentBackground">#e7e7e7</color>
+    <color name="cardBtnBorder">#ebebeb</color>
+
+    //beans address details card colors
+    <color name="addressDetailsBubbleBackground">#f7f7f7</color>
+    <color name="drawerHeaderBackground">#f7f7f7</color>
+    <color name="drawerRowTextColor">#0a2239</color>
+
+    <color name="dataEntryRowColor">#f7f7f7</color>
+    <color name="formEntryTitle">#0a2239</color>
+    <color name="packageInfoLabel">#b2b2b2</color>
+
+    <color name="aptStopCardBackground">#f5f7f9</color>
+    <color name="aptCardConnectorLineColor">#e7e7e7</color>
+</resources>

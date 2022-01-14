@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PagePositionIndicator">
+        <attr name="selected_dot_color"
+              format="color"/>
+        <attr name="unselected_dot_color"
+              format="color"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="TutorialPage">
+        <attr name="center_image_drawable_id"
+              format="string"/>
+        <attr name="major_text"
+              format="string"/>
+        <attr name="minor_text"
+              format="string"/>
+        <attr name="tutorial_major_string_color"
+              format="color"/>
+        <attr name="tutorial_minor_string_color"
+              format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundMapButton">
+        <attr name="button_down_background"
+                format="string"/>
+
+        <attr name="button_up_background"
+                format="string"/>
+
+        <attr name="button_down_image"
+                format="string"/>
+
+        <attr name="button_up_image"
+                format="string"/>
+    </declare-styleable>
+
+
+</resources>

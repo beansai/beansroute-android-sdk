@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="16dp"
+        android:orientation="vertical">
+
+    <RelativeLayout
+            android:id="@+id/searchContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="21dp"
+                android:background="@drawable/bg_search_grey_border">
+
+            <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/back_arrow" />
+
+
+            <ai.beans.common.widgets.autocomplete.BeansAutocompleteWidget
+                    android:id="@+id/autoCompleteWidget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="14dp"
+                    android:layout_toRightOf="@+id/backButton" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchDisplayContainer"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_search_grey_border"
+            android:visibility="visible">
+
+        <RelativeLayout
+                android:id="@+id/addressDisplayContainer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8.5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/unitSelectionSubPanel">
+
+            <ImageView
+                    android:id="@+id/drawerButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="invisible"
+                    android:background="@drawable/hamburger" />
+
+
+            <TextView
+                    android:id="@+id/currentSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:layout_toRightOf="@+id/drawerButton"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:hint="Search Location"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="5sp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/unitSelectionSubPanel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8.5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="14.5dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_search_grey_border"
+                android:visibility="gone"
+                app:layout_constraintRight_toLeftOf="@+id/clearSearchBtn"
+                app:layout_constraintWidth_min="71dp">
+
+            <TextView
+                    android:id="@+id/selectedUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_horizontal"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="5sp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:id="@+id/clearSearchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15.7dp"
+                android:padding="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/close" />
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/unitSelectionPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:visibility="gone">
+
+        <ImageView
+                android:id="@+id/backToSearchButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/back_arrow" />
+
+        <RelativeLayout
+                android:id="@+id/currentSelectedAddressContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="19dp"
+                android:layout_toLeftOf="@+id/launchDirectionsBtn"
+                android:layout_toRightOf="@+id/backToSearchButton">
+
+            <TextView
+                    android:id="@+id/address_string_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="top"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="5sp"
+                    android:padding="0dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+
+            <TextView
+                    android:id="@+id/address_string_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_string_1"
+                    android:layout_alignLeft="@+id/address_string_1"
+                    android:layout_marginTop="1.8dp"
+                    android:fontFamily="sans-serif"
+                    android:letterSpacing="-0.02"
+                    android:textColor="#8e8e93"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+                android:id="@+id/launchDirectionsBtn"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/next" />
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentSelectedAddressContainer"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/bg_search_grey_border">
+
+            <ai.beans.common.widgets.autocomplete.BeansAutocompleteWidget
+                    android:id="@+id/unitAutocompleteWidget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

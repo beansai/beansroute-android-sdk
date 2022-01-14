@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">common</string>
+    <string name="common_tool_bar">common_tool_bar</string>
+    <string name="submit">Submit</string>
+    <string name="search_for_location">Search</string>
+    <string name="gallery_picker_text">Choose from gallery</string>
+    <string name="camera_picker_text">Take a photo</string>
+    <string name="location_permission_major_text">Allow access to your location</string>
+    <string name="location_permission_minor_text">To see the map you will need to enable location services</string>
+    <string name="location_permission_settings_text">Enable location access in App Settings</string>
+    <string name="location_permission_btn_txt">Enable location services</string>
+    <string name="choose_marker_type">Choose marker type</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="parking">#007ccf</color>
+    <color name="unit">#0a2239</color>
+    <color name="entrance">#0cb1a1</color>
+    <color name="polygon_outline">#0cb1a1</color>
+    <color name="polygon_fill">#3f0cb1a1</color>
+    <color name="circle_polygon_fill">#1FFF0000</color>
+    <color name="circle_polygon_stroke">#80FF0000</color>
+</resources>
