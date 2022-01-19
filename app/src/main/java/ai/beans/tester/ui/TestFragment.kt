@@ -16,14 +16,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 class TestFragment : BeansFragment() {
-    private var cameraCaptureResults: CameraCaptureResults? = null
     var routeDataViewModel: RouteStopsViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraCaptureResults =
-            ViewModelProviders.of(activity!!).get(CameraCaptureResults::class.java)
-
         routeDataViewModel = ViewModelProviders.of(
             activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
@@ -36,13 +32,6 @@ class TestFragment : BeansFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.fragment_test, container, false)
-        var button = v.findViewById<Button>(R.id.camera_launch_test)
-        button?.setOnClickListener {
-            //getMainActivity()?.launchFragment(CameraFragment::class.java, null)
-            //poiRenderer?.plugIn()
-            //stopRenderer?.plugIn()
-        }
-
         return v
     }
 
@@ -50,12 +39,6 @@ class TestFragment : BeansFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         var fragment = childFragmentManager?.findFragmentById(R.id.embedded_map_fragment)
-        if (fragment != null) {
-            //mapFragment = fragment as MapFragment
-            //poiRenderer?.setMap(mapFragment!!)
-            //stopRenderer?.setMap(mapFragment!!)
-        }
-
         var stops = ArrayList<RouteStop>()
         stops.add(RouteStop(
             "id1",
