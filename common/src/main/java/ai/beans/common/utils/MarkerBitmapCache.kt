@@ -1,6 +1,6 @@
 package ai.beans.common.utils
 
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import android.content.res.Configuration
 import android.content.res.Configuration.*
 import android.graphics.Bitmap
@@ -9,19 +9,15 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import org.greenrobot.eventbus.EventBus
 
 object MapMarkerBitmapCache : LifecycleObserver{
     enum class ICON_MODE {NONE, DARK, LIGHT}
     var currentMode = UI_MODE_NIGHT_UNDEFINED
-    var bmpLassoedLastMarker : Bitmap?= null
-    var bmpLassoedMarker : Bitmap?= null
     var bitmapHashMap = HashMap<String, Bitmap>()
-    var bitmapWithTextHashMap = HashMap<String, Bitmap>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun checkIfDarkMode() {
-        var uiMode = BeansApplication.getContext()?.resources?.configuration?.uiMode
+        var uiMode = BeansContextContainer.context?.resources?.configuration?.uiMode
         var appUiSetting = AppCompatDelegate.getDefaultNightMode()
         if(uiMode != null) {
             var systemUiNightMode = uiMode and Configuration.UI_MODE_NIGHT_MASK

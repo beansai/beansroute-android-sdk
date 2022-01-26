@@ -1,27 +1,19 @@
 package ai.beans.common.location
 
-import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import android.location.Location
 import android.os.*
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationServices
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
 class BeansLocationProvider : Service(){
@@ -171,7 +163,7 @@ class BeansLocationProvider : Service(){
         // Notify anyone listening for broadcasts about the new location.
         val intent = Intent("NEW_LOCATION")
         intent.putExtra("LOCATION", location)
-        LocalBroadcastManager.getInstance(BeansApplication.mInstance?.applicationContext!!).sendBroadcast(intent)
+        LocalBroadcastManager.getInstance(BeansContextContainer.application!!).sendBroadcast(intent)
 
     }
 
@@ -185,7 +177,7 @@ class BeansLocationProvider : Service(){
                                 mLocation = task.getResult()
                                 val intent = Intent("NEW_LOCATION")
                                 intent.putExtra("LOCATION", mLocation)
-                                LocalBroadcastManager.getInstance(BeansApplication.mInstance?.applicationContext!!).sendBroadcast(intent)
+                                LocalBroadcastManager.getInstance(BeansContextContainer.application!!).sendBroadcast(intent)
 
                             } else {
                                 Log.w(TAG, "Failed to get location.")

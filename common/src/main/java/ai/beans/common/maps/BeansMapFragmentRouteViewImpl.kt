@@ -4,7 +4,7 @@ package ai.beans.common.maps
 //import kotlinx.android.synthetic.main.route_error_dialog.*
 // import kotlinx.android.synthetic.main.fragment_map_view_container.*
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.CollapseCard
 import ai.beans.common.events.ExpandCard
@@ -27,7 +27,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -54,11 +55,11 @@ class BeansMapFragmentRouteViewImpl : BeansFragment() {
         stopsRendererRouteImpl?.plugIn()
 
         locationHolder = ViewModelProviders.of(activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
         routeDataViewModel = ViewModelProviders.of(activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             RouteStopsViewModel::class.java)
         
         customMarkerImagesViewModel = ViewModelProviders.of(activity!!).get(
@@ -158,7 +159,7 @@ class BeansMapFragmentRouteViewImpl : BeansFragment() {
 
     fun showStopDetails(currentStop: RouteStop?) {
         var locationHolder = ViewModelProviders.of(activity!!!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
         locationHolder?.let {
             var b = Bundle()

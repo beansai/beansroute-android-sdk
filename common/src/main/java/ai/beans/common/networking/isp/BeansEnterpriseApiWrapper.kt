@@ -13,14 +13,12 @@ import java.lang.reflect.UndeclaredThrowableException
 suspend fun optimizeStopList(
     stops: OptimizeStopRequest,
     startLocation: GeoPoint? = null,
-    endLocation: GeoPoint? = null,
-    moveToFront: Boolean? = true
+    endLocation: GeoPoint? = null
 ): Envelope<RouteStops> {
     try {
         var response = BeansEnterpriseNetworkService.BEANS_ENTERPRISE_API!!.optimizeStops(
             startLocation,
             endLocation,
-            null,
             stops
         )
         if (response != null && response.code() == 200) {

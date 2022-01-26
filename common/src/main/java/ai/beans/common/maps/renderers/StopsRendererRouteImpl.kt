@@ -1,9 +1,8 @@
 package ai.beans.common.maps.renderers
 
 import ai.beans.common.MapMoved
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.events.*
-import ai.beans.common.location.LocationHolder
 import ai.beans.common.maps.createMarkerTag
 import ai.beans.common.maps.getDataFromTag
 import ai.beans.common.maps.mapproviders.BeansMapInterface
@@ -13,12 +12,12 @@ import ai.beans.common.maps.polylines.BeansPolyline
 import ai.beans.common.panels.PanelInteractionListener
 import ai.beans.common.pojo.GeoPoint
 import ai.beans.common.pojo.RouteStop
+import ai.beans.common.pojo.RouteStopStatus
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.utils.MultiStateObserver
-import ai.beans.common.widgets.markers.IconAttributes
-import ai.beans.common.pojo.RouteStopStatus
 import ai.beans.common.viewmodels.CurrentActiveRouteStopViewModel
 import ai.beans.common.viewmodels.RouteStopsViewModel
+import ai.beans.common.widgets.markers.IconAttributes
 import ai.beans.common.widgets.markers.MarkerIconHelper
 import android.app.AlertDialog
 import android.graphics.Color
@@ -28,10 +27,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.*
 import com.google.android.gms.maps.Projection
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.ui.IconGenerator
-import kotlinx.coroutines.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.withLock
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -57,7 +57,6 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
     var mapFragment: BeansMapInterface? = null
     val polylineArray = ArrayList<BeansPolyline>()
     var projection: Projection? = null
-    var locationHolder: LocationHolder? = null
     var showingCompletedMarkersFeature = true
     var showMarkersWithAddressFeature = false
     var showMarkersWithSidColor = false
@@ -69,22 +68,14 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
     var isRenderRouteComplete: MutableLiveData<Boolean>? = null
 
     init {
-
-        locationHolder = ViewModelProviders.of(
-            ownerFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
-        ).get(
-            LocationHolder::class.java
-        )
-
         routeDataViewModel = ViewModelProviders.of(
             ownerFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
         ).get(RouteStopsViewModel::class.java)
 
         currentStopViewModel = ViewModelProviders.of(
             ownerFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
         ).get(CurrentActiveRouteStopViewModel::class.java)
 
         iconGenerator = IconGenerator(ownerFragment.context)
@@ -688,26 +679,5 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
 
     fun showNextStop() {
         routeDataViewModel?.moveToNextStop()
-    }
-
-    fun setCurrentLocation() {
-        if (locationHolder?.isLocationAvailable?.value == true) {
-            if (mapInterface!!.isMapReady()) {
-                mapInterface?.setCurrentLocation(locationHolder!!.currentLocation!!)
-            }
-        }
-    }
-
-    fun enableSatelliteView(enable: Boolean) {
-        //ToDo Enable satellite mode
-        if (locationHolder?.isLocationAvailable?.value == true) {
-            if (mapInterface!!.isMapReady()) {
-                if (mapInterface!!.isSatelliteViewEnabled()) {
-                    mapInterface!!.enableSatelliteView(false)
-                } else {
-                    mapInterface!!.enableSatelliteView(true)
-                }
-            }
-        }
     }
 }

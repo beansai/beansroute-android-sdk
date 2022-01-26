@@ -1,18 +1,17 @@
 package ai.beans.tester
 
-import ai.beans.common.application.BeansApplication
-import ai.beans.common.init.init
-import ai.beans.tester.networking.EnvConfig
+import android.app.Application
 import android.content.Context
-import com.google.firebase.analytics.FirebaseAnalytics
 
-class TestApplication : BeansApplication() {
+class TestApplication : Application() {
     companion object {
-        fun getInstance() : BeansApplication? {
+        var mInstance: Application? = null
+
+        fun getInstance() : Application? {
             return mInstance
         }
         fun getContext() : Context? {
-            if(mInstance != null) {
+            if (mInstance != null) {
                 return mInstance!!.applicationContext
             } else {
                 return null
@@ -22,15 +21,7 @@ class TestApplication : BeansApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        mFirebaseInstance = FirebaseAnalytics.getInstance(applicationContext)
+
+        mInstance = this
     }
-
-    override open fun fireDeferredNotification() {
-    }
-
-    override open fun sendTokenToServer() {
-    }
-
-
-
 }

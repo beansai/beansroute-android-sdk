@@ -1,18 +1,18 @@
 package ai.beans.common.location
 
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.pojo.GeoPoint
 import android.app.Application
 import android.content.*
+import android.content.Context.BIND_AUTO_CREATE
 import android.location.Location
+import android.os.IBinder
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import android.content.Context.BIND_AUTO_CREATE
-import android.os.IBinder
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.maps.LocationSource
 
 
@@ -103,7 +103,7 @@ class LocationHolder(application: Application) : AndroidViewModel(application), 
         var intentFilter = IntentFilter("NEW_LOCATION")
         intentFilter.addAction("SERVICE_CONNECTED")
         intentFilter.addAction("SERVICE_DISCONNECTED")
-        LocalBroadcastManager.getInstance(BeansApplication.mInstance!!).registerReceiver(
+        LocalBroadcastManager.getInstance(BeansContextContainer.application!!).registerReceiver(
             mMessageReceiver, intentFilter);
 
     }
@@ -112,7 +112,7 @@ class LocationHolder(application: Application) : AndroidViewModel(application), 
         Log.d("LOCATION_HOLDER", "Binding to Service")
         val mIntent = Intent()
         //mIntent.setClassName("ai.beans.stage.consumer", "ai.beans.common.location.BeansLocationProvider")//BeansApplication.mInstance?.applicationContext, BeansLocationProvider::class.java)
-        BeansApplication.mInstance?.applicationContext?.let {
+        BeansContextContainer.context?.let {
             mIntent.setClass(it, BeansLocationProvider::class.java)
             it.bindService(mIntent, this, BIND_AUTO_CREATE)
         }
@@ -128,7 +128,7 @@ class LocationHolder(application: Application) : AndroidViewModel(application), 
         mLocalBinder = service as BeansLocationProvider.LocalBinder
         locationService = mLocalBinder?.getLocationService()
         val intent = Intent("SERVICE_CONNECTED")
-        LocalBroadcastManager.getInstance(BeansApplication.mInstance?.applicationContext!!).sendBroadcast(intent)
+        LocalBroadcastManager.getInstance(BeansContextContainer.context!!).sendBroadcast(intent)
         mLocalBinder?.onBackground(getApplication())
     }
 

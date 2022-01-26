@@ -1,8 +1,6 @@
 package ai.beans.common.maps.mapproviders
 
 import ai.beans.common.R
-import ai.beans.common.analytics.AnalyticsEvents
-import ai.beans.common.analytics.fireEvent
 import ai.beans.common.maps.boundingbox.BeansMapBoundingBox
 import ai.beans.common.maps.markers.BeansMarkerAttributes
 import ai.beans.common.maps.markers.BeansMarkerInterface
@@ -277,10 +275,8 @@ class BeansMapGoogleImpl : MapView, GoogleMap.OnCameraIdleListener, BeansMapInte
             return
         }
         if (shouldEnableSatellite) {
-            fireEvent(AnalyticsEvents.SELECTED_SATELLITE_VIEW, null)
             mMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
         } else {
-            fireEvent(AnalyticsEvents.SELECTED_MAP_VIEW, null)
             mMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
         }
     }

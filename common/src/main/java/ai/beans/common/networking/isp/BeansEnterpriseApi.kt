@@ -12,7 +12,6 @@ interface BeansEnterpriseApi {
     suspend fun optimizeStops(
         @Query("start") start: GeoPoint? = null,
         @Query("end") endLoc: GeoPoint? = null,
-        @Query("moveToFront") moveToFront: Boolean? = null,
         @Body body: OptimizeStopRequest
     ): retrofit2.Response<Envelope<RouteStops>>
 

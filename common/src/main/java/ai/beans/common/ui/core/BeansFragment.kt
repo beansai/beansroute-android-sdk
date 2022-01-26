@@ -1,7 +1,6 @@
 package ai.beans.common.ui.core
 
 import ai.beans.common.DummyEvent
-import ai.beans.common.analytics.fireScreenViewEvent
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.permissions.PermissionManager
 import ai.beans.common.widgets.HUD
@@ -109,8 +108,6 @@ abstract class BeansFragment : DialogFragment() {
     }
 
     private fun trackScreenView() {
-        if(screenName != null)
-            fireScreenViewEvent(getMainActivity(), screenName!!)
     }
 
     override fun onDestroy() {

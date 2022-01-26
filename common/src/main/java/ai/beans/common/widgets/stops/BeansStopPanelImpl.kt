@@ -1,9 +1,8 @@
 package ai.beans.common.widgets.stops
 
-import ai.beans.common.beanbusstation.BeansBusStation
-import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
+import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.*
 import ai.beans.common.location.LocationHolder
@@ -12,10 +11,11 @@ import ai.beans.common.maps.BeansMapFragmentApartmentDetailsImpl
 import ai.beans.common.panels.PanelControlInterface
 import ai.beans.common.panels.PanelInteractionListener
 import ai.beans.common.pojo.GeoPoint
-import ai.beans.common.pojo.RouteStopStatus
 import ai.beans.common.pojo.RouteStop
+import ai.beans.common.pojo.RouteStopStatus
 import ai.beans.common.pojo.search.NoteResponse
 import ai.beans.common.pojo.search.SearchResponse
+import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.viewmodels.CurrentActiveRouteStopViewModel
 import ai.beans.common.viewmodels.RouteStopsViewModel
 import ai.beans.common.widgets.*
@@ -141,7 +141,7 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
                     renderStopCard(stop)
                 } else {
                     var routeDataViewModel = ViewModelProviders.of(fragment!!.activity!!,
-                        ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+                        ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
                         RouteStopsViewModel::class.java)
                     var parentStop = routeDataViewModel.getStopDetails(stop!!.parent_list_item_id!!)!!
                     renderStopCard(parentStop)
@@ -184,7 +184,7 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
 
     override fun onMoreInfoClicked(currentStop: RouteStop?) {
         var locationHolder = ViewModelProviders.of(fragment?.getMainActivity()!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
         locationHolder?.let {
             var b = Bundle()
@@ -364,12 +364,12 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
                     listener?.onPanelStateChanged(newState)
                     if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                         var routeDataViewModel = ViewModelProviders.of(fragment!!.activity!!,
-                            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+                            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
                             RouteStopsViewModel::class.java)
                         routeDataViewModel.setCurrentStop(null)
                         var currentStopViewModel = ViewModelProviders.of(
                             fragment!!.activity!!,
-                            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+                            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
                         ).get(CurrentActiveRouteStopViewModel::class.java)
                         currentStopViewModel.setCurrentRouteStop(null)
                     }

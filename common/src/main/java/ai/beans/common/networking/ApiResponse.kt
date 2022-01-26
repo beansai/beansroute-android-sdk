@@ -1,6 +1,5 @@
 package ai.beans.common.networking
 
-import ai.beans.common.analytics.fireNetworkErrorEvent
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
@@ -53,7 +52,6 @@ object ApiResponse {
                         generatedError.message = "Something went wrong"
                         env.error = generatedError
                     }
-                    fireNetworkErrorEvent(response)
                     return env
                 }
             } else {

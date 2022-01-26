@@ -1,7 +1,7 @@
 package ai.beans.common.maps
 
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.CollapseCard
 import ai.beans.common.events.ExpandCard
@@ -50,7 +50,7 @@ class BeansMapFragmentApartmentDetailsImpl : BeansFragment() {
         routeStopId = arguments?.getString("STOP_ID")
 
         locationHolder = ViewModelProviders.of(activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
         customMarkerImagesViewModel = ViewModelProviders.of(activity!!).get(

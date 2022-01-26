@@ -1,7 +1,7 @@
 package ai.beans.common.maps.renderers
 
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.ShowDataEntryDialog
@@ -61,15 +61,15 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
 
     init {
         routeStopsViewModel = ViewModelProviders.of(ownerFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             RouteStopsViewModel::class.java)
 
         locationHolder = ViewModelProviders.of(ownerFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
-        customMarkerImagesViewModel = ViewModelProviders.of(parentFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+        customMarkerImagesViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             CustomMarkerImagesViewModel::class.java)
     }
 

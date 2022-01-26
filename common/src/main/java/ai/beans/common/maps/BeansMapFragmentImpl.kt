@@ -2,8 +2,7 @@ package ai.beans.common.maps
 
 import ai.beans.common.*
 import ai.beans.common.R
-import ai.beans.common.analytics.fireEvent
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.events.*
 import ai.beans.common.location.LocationHolder
 import ai.beans.common.maps.*
@@ -22,18 +21,18 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.lifecycle.*
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import android.location.Location
-import android.view.*
-import android.widget.FrameLayout
-import androidx.lifecycle.*
 import org.greenrobot.eventbus.EventBus
 
 
@@ -77,7 +76,7 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
 
         locationHolder = ViewModelProviders.of(
             activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
         ).get(
             LocationHolder::class.java
         )
@@ -404,10 +403,8 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
             return
         }
         if (shouldEnableSatellite) {
-            fireEvent(ai.beans.common.analytics.AnalyticsEvents.SELECTED_SATELLITE_VIEW, null)
             mapviewInterface!!.enableSatelliteView(true)
         } else {
-            fireEvent(ai.beans.common.analytics.AnalyticsEvents.SELECTED_MAP_VIEW, null)
             mapviewInterface!!.enableSatelliteView(false)
         }
     }

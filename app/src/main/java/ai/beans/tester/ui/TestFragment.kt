@@ -1,21 +1,19 @@
 package ai.beans.tester.ui
 
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.networking.isp.optimizeStopList
 import ai.beans.common.pojo.*
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.viewmodels.RouteStopsViewModel
-import ai.beans.common.widgets.camera.CameraCaptureResults
 import ai.beans.tester.R
+import ai.beans.tester.TestApplication
 import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -25,9 +23,13 @@ class TestFragment : BeansFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        BeansContextContainer.application = TestApplication.getInstance()
+        BeansContextContainer.context = TestApplication.getContext()
+
         routeDataViewModel = ViewModelProviders.of(
             activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
         ).get(RouteStopsViewModel::class.java)
 
         stops.add(RouteStop(
@@ -220,21 +222,9 @@ class TestFragment : BeansFragment() {
             0,
             0
         ))
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val v = inflater.inflate(R.layout.fragment_test, container, false)
-        return v
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         routeDataViewModel?.setStops(stops)
+
         MainScope().launch {
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
@@ -242,7 +232,7 @@ class TestFragment : BeansFragment() {
                     parentStops.add(it)
                 }
             }
-            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(37.62708995575689, -122.36044460693604), GeoPoint(37.0, -122.0), false)
+            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(37.62708995575689, -122.36044460693604), GeoPoint(37.0, -122.0))
             var orderedStops = ArrayList<RouteStop>()
             for (routeStop in optimizedParentStops.data!!.item!!) {
                 stops.forEach {
@@ -259,7 +249,19 @@ class TestFragment : BeansFragment() {
             routeDataViewModel?.setStops(orderedStops)
         }
 
-        var fragment = childFragmentManager?.findFragmentById(R.id.embedded_map_fragment)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val v = inflater.inflate(R.layout.fragment_test, container, false)
+        return v
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {

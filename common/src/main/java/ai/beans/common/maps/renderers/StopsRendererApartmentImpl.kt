@@ -2,7 +2,7 @@ package ai.beans.common.maps.renderers
 
 import ai.beans.common.MapClicked
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
+import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.GoToNextStop
@@ -44,8 +44,8 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class StopsRendererApartmentImpl(parentFragment: BeansFragment, savedStateBundle: Bundle?)
-    : BeansMapRenderer(parentFragment, savedStateBundle),
+class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle: Bundle?)
+    : BeansMapRenderer(ownerFragment, savedStateBundle),
     LifecycleObserver,
     PanelInteractionListener {
 
@@ -68,16 +68,16 @@ class StopsRendererApartmentImpl(parentFragment: BeansFragment, savedStateBundle
     var customMarkerImagesViewModel: CustomMarkerImagesViewModel? = null
 
     init {
-        routeStopsViewModel = ViewModelProviders.of(parentFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+        routeStopsViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             RouteStopsViewModel::class.java)
 
-        locationHolder = ViewModelProviders.of(parentFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+        locationHolder = ViewModelProviders.of(ownerFragment.activity!!,
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
-        customMarkerImagesViewModel = ViewModelProviders.of(parentFragment.activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+        customMarkerImagesViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             CustomMarkerImagesViewModel::class.java)
     }
 

@@ -1,13 +1,11 @@
 package ai.beans.common.maps
 
 import ai.beans.common.R
-import ai.beans.common.application.BeansApplication
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.CollapseCard
 import ai.beans.common.events.ExpandCard
 import ai.beans.common.events.HideCard
 import ai.beans.common.events.ShowCard
-import ai.beans.common.location.LocationHolder
 import ai.beans.common.maps.renderers.StopsRendererSingleImpl
 import ai.beans.common.pojo.RouteStop
 import ai.beans.common.pojo.search.SearchResponse
@@ -17,7 +15,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.MainScope
@@ -34,7 +31,6 @@ class BeansMapFragmentAddressDetailsImpl  : BeansFragment() {
     var routes : SearchResponse? = null
     var mapFragment : BeansMapFragmentImpl? = null
     lateinit var containerPanel : BeansStopPanelImpl
-    var locationHolder : LocationHolder ?= null
     var routeStop: RouteStop?= null
     var routeStopId: String?= null
 
@@ -50,10 +46,6 @@ class BeansMapFragmentAddressDetailsImpl  : BeansFragment() {
 
         addressDetailsRendererSingleImpl = StopsRendererSingleImpl(this, savedInstanceState)
         addressDetailsRendererSingleImpl?.plugIn()
-
-        locationHolder = ViewModelProviders.of(activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
-            LocationHolder::class.java)
 
         customMarkerImagesViewModel = ViewModelProviders.of(activity!!).get(
             CustomMarkerImagesViewModel::class.java)

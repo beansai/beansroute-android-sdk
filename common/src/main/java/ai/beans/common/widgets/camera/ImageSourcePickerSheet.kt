@@ -3,7 +3,6 @@ package ai.beans.common.widgets.camera
 import ai.beans.common.R
 import ai.beans.common.SourceCamera
 import ai.beans.common.SourceGallery
-import ai.beans.common.analytics.fireScreenViewEvent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +36,5 @@ class ImageSourcePickerSheet : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        fireScreenViewEvent(activity!!, "image_source_picker")
     }
 }

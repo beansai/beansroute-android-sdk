@@ -1,6 +1,5 @@
 package ai.beans.common.widgets
 
-import ai.beans.common.analytics.fireScreenViewEvent
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.networking.Envelope
 import ai.beans.common.pojo.search.FeedbackNoteType
@@ -109,8 +108,6 @@ class DataCollectorDialog : BeansFragment() {
         }
 
         setDialogStyle()
-
-        fireScreenViewEvent(activity!!, screen_name!!)
 
         return alertDialog
     }
