@@ -60,15 +60,15 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
     var customMarkerImagesViewModel: CustomMarkerImagesViewModel? = null
 
     init {
-        routeStopsViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+        routeStopsViewModel = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             RouteStopsViewModel::class.java)
 
-        locationHolder = ViewModelProviders.of(ownerFragment.activity!!,
+        locationHolder = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
-        customMarkerImagesViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+        customMarkerImagesViewModel = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             CustomMarkerImagesViewModel::class.java)
     }

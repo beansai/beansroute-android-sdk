@@ -52,7 +52,6 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
     var childList: ArrayList<RouteStop>? = null
     var routeStopsViewModel : RouteStopsViewModel? = null
     var locationHolder : LocationHolder?= null
-    var savedLocation : LatLng?= null
     var mapFragment : BeansMapFragmentImpl? = null
     var totalBounds: ArrayList<GeoPoint>? = null
     var currentSelectedMarker : BeansMarkerInterface ?= null
@@ -68,15 +67,15 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
     var customMarkerImagesViewModel: CustomMarkerImagesViewModel? = null
 
     init {
-        routeStopsViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+        routeStopsViewModel = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             RouteStopsViewModel::class.java)
 
-        locationHolder = ViewModelProviders.of(ownerFragment.activity!!,
+        locationHolder = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             LocationHolder::class.java)
 
-        customMarkerImagesViewModel = ViewModelProviders.of(ownerFragment.activity!!,
+        customMarkerImagesViewModel = ViewModelProviders.of(parentFragment.activity!!,
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
             CustomMarkerImagesViewModel::class.java)
     }
@@ -548,6 +547,20 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
                         )
                     )
                     addApartmentStopMarkersToMap(aptStop)
+
+                    var markersFromServer = beansInfoForStopMap[aptStop.list_item_id]?.getMarkers()
+                    if (markersFromServer != null) {
+                        for (beansMarkerInfo in markersFromServer) {
+                            var geoPoint = beansMarkerInfo.location
+                            if (geoPoint != null) {
+                                points.add(LatLng(
+                                    geoPoint.lat!!,
+                                    geoPoint.lng!!
+                                ))
+                            }
+                        }
+                    }
+
                     //update the delivered count if this apt stop is done
                     if(aptStop.status == RouteStopStatus.FINISHED ||  aptStop.status == RouteStopStatus.FAILED) {
                         totalDeliveredCount++
@@ -571,10 +584,7 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
 
             //We got the bounds
             totalBounds?.let {
-                if (savedLocation == null) {
-                    mapInterface?.setCurrentBounds(totalBounds!!, 500, 500, 200)
-                    savedLocation = LatLng(1.0, 1.0)
-                }
+                mapInterface?.setCurrentBounds(totalBounds!!, 500, 500, 200)
             }
 
             //finally, which stop do we show on the card?

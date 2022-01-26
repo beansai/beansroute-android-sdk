@@ -3,6 +3,7 @@ package ai.beans.common.maps.renderers
 import ai.beans.common.MapMoved
 import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.events.*
+import ai.beans.common.maps.BeansMapFragmentRouteViewImpl
 import ai.beans.common.maps.createMarkerTag
 import ai.beans.common.maps.getDataFromTag
 import ai.beans.common.maps.mapproviders.BeansMapInterface
@@ -223,14 +224,13 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
 
                     updateRouteStopMarkerIcon(marker!!, currentStop, attributes)
 
-                    /*XX MainScope().launch {
-                        (parentFragment as FullRouteMapFragment).stopCardPanel?.renderStopCard(
+                    MainScope().launch {
+                        (parentFragment as BeansMapFragmentRouteViewImpl).stopCardPanelImpl?.renderStopCard(
                             currentStop
                         )
-                        (parentFragment as FullRouteMapFragment).stopCardPanel?.collapse()
-                    }*/
+                    }
                 } else {
-                    //XX (parentFragment as FullRouteMapFragment).stopCardPanel?.hide()
+                    (parentFragment as BeansMapFragmentRouteViewImpl).stopCardPanelImpl?.hide()
                     currentSelectedStopId = null
                 }
                 //marker with address
@@ -242,7 +242,7 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
                 }
             } else {
                 //there is no marker selected....hide the panel
-                //XX (parentFragment as FullRouteMapFragment).stopCardPanel?.hide()
+                (parentFragment as BeansMapFragmentRouteViewImpl).stopCardPanelImpl?.hide()
                 currentSelectedStopId = null
             }
         }
@@ -308,11 +308,11 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
                 renderRouteStops(allStops!!)
                 updatePaths()
 
-                /*MainScope().launch {
-                    (parentFragment as FullRouteMapFragment).stopCardPanel?.setPanelInteractionListener(
-                        this@RouteStopsRenderer
+                MainScope().launch {
+                    (parentFragment as BeansMapFragmentRouteViewImpl).stopCardPanelImpl?.setPanelInteractionListener(
+                        this@StopsRendererRouteImpl
                     )
-                }*/
+                }
             }
         }
     }
@@ -473,7 +473,6 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
 
     }
 
-
     private fun updateRouteStopMarkerIconAsLastStop(
         marker: BeansMarkerInterface, stop: RouteStop, attributes: IconAttributes,
         centerMarker: Boolean = true
@@ -598,7 +597,7 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
 
     private fun handleMarkerClick(marker: BeansMarkerInterface) {
         if (mapInterface!!.isMapReady()) {
-            //XX (parentFragment as FullRouteMapFragment).hideKeyboard()
+            (parentFragment as BeansMapFragmentRouteViewImpl).hideKeyboard()
             var newStop = getDataFromTag(marker.getMarkerTag()!!, rendererId) as RouteStop
             routeDataViewModel?.setCurrentStop(newStop)
             currentStopViewModel?.setCurrentRouteStop(newStop)

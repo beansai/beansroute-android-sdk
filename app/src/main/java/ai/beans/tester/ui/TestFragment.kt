@@ -1,6 +1,8 @@
 package ai.beans.tester.ui
 
+import ai.beans.common.MapMoved
 import ai.beans.common.application.BeansContextContainer
+import ai.beans.common.events.UpdateStopStatus
 import ai.beans.common.networking.isp.optimizeStopList
 import ai.beans.common.pojo.*
 import ai.beans.common.ui.core.BeansFragment
@@ -16,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class TestFragment : BeansFragment() {
     var routeDataViewModel: RouteStopsViewModel? = null
@@ -246,7 +250,9 @@ class TestFragment : BeansFragment() {
                     orderedStops.add(it)
                 }
             }
-            routeDataViewModel?.setStops(orderedStops)
+
+            stops = orderedStops
+            routeDataViewModel?.setStops(stops)
         }
 
     }
@@ -296,5 +302,17 @@ class TestFragment : BeansFragment() {
 
     override fun setScreenName() {
         screenName = "TestFragment"
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: UpdateStopStatus) {
+        print (event.stopId)
+        stops.forEach {
+            if (it.list_item_id == event.stopId) {
+                it.status = event.status
+            }
+        }
+        routeDataViewModel?.setStops(stops)
+        routeDataViewModel?.hasNewRoutesData?.value = true
     }
 }

@@ -136,7 +136,7 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
     fun updateStopStatus(stop: RouteStop, status: RouteStopStatus) {
         MainScope().launch {
             if (stop != null) {
-                stop.status = status
+                /*stop.status = status
                 if (!showingChildStops) {
                     renderStopCard(stop)
                 } else {
@@ -145,7 +145,7 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
                         RouteStopsViewModel::class.java)
                     var parentStop = routeDataViewModel.getStopDetails(stop!!.parent_list_item_id!!)!!
                     renderStopCard(parentStop)
-                }
+                }*/
                 EventBus.getDefault().post(
                     UpdateStopStatus(stopId = stop!!.list_item_id!!, status = status)
                 )
