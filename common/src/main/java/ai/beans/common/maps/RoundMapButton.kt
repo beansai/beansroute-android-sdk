@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 
 class RoundMapButton : RelativeLayout {
-
     var isButtonPressed : Boolean = false
     var imageView : ImageView?= null
     var imageDown : Drawable?= null
@@ -17,7 +16,6 @@ class RoundMapButton : RelativeLayout {
     var backroundDown : Drawable?= null
     var backroundUp : Drawable?= null
     var mapButtonlistener : MapButtonListener ?= null
-
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
@@ -32,7 +30,6 @@ class RoundMapButton : RelativeLayout {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
     }
-
 
     private fun setupContent() {
         setBackgroundDrawable(backroundUp)

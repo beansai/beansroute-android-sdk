@@ -2,6 +2,7 @@ package ai.beans.common.widgets.stops
 
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.R
+import ai.beans.common.events.ShowMoreInfo
 import ai.beans.common.events.ShowNextStop
 import ai.beans.common.events.ShowPrevStop
 import ai.beans.common.pojo.RouteStop
@@ -39,6 +40,7 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
     var actionButtonListener: ActionButtonListener? = null
     var iconGenerator: IconGenerator? = null
     var marker_container: View? = null
+    var infoButton: ImageButton ?= null
     var navigateButton: ImageButton? = null
     var removeTransferButtonII: Button? = null
     var connectorLine: View? = null
@@ -71,6 +73,7 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
         beansStopPnlTimeWindowImpl = v.findViewById(R.id.time_window_panel)
         pnlActionsImpl = v.findViewById(R.id.actions_panel)
         packageDetailsImpl = v.findViewById(R.id.package_info_panel)
+        infoButton = v.findViewById(R.id.moreInfoBtn)
         navigateButton = v.findViewById(R.id.navigateBtn)
         pnlNotesImpl = v.findViewById(R.id.notes_panel)
         beansStopPnlCustomerImpl = v.findViewById(R.id.user_panel)
@@ -101,6 +104,22 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
             }
         }
 
+        pnlActionsImpl?.infoButton!!.setOnClickListener{
+            if(actionButtonListener != null) {
+                actionButtonListener!!.onMoreInfoClicked(currentStop)
+            } else {
+                localBus?.post(ShowMoreInfo())
+            }
+        }
+
+        pnlActionsImpl?.infoButton!!.setOnClickListener {
+            if (actionButtonListener != null) {
+                actionButtonListener!!.onMoreInfoClicked(currentStop)
+            } else {
+                localBus?.post(ShowMoreInfo())
+            }
+        }
+
         pnlActionsImpl?.prevStopButton!!.setOnClickListener {
             if (actionButtonListener != null) {
                 actionButtonListener!!.onPrevStopClicked(currentStop)
@@ -114,6 +133,14 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
                 actionButtonListener!!.onNextStopClicked(currentStop)
             } else {
                 localBus?.post(ShowNextStop())
+            }
+        }
+
+        infoButton?.setOnClickListener {
+            if(actionButtonListener != null) {
+                actionButtonListener!!.onMoreInfoClicked(currentStop)
+            } else {
+                localBus?.post(ShowMoreInfo())
             }
         }
 
@@ -178,6 +205,12 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
     open fun showActionsPanel() {
         pnlActionsImpl?.visibility = View.VISIBLE
         pnlActionsImpl?.show()
+    }
+
+    fun hideMoreInfoButton() {
+        //We hide the button in the actions panel as well as the outer container
+        infoButton?.visibility = GONE
+        pnlActionsImpl?.infoButton?.visibility = GONE
     }
 
     open fun makeSkinny(skinny: Boolean, currentStop: RouteStop?) {

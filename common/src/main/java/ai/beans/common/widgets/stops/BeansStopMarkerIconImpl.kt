@@ -454,7 +454,7 @@ class BeansStopMarkerIconImpl : RelativeLayout {
             markerNumberTextView?.text = num.toString()
             //The text color has to change for apt stops
             if(hasApartments) {
-                markerNumberTextView?.setTextColor(resources.getColor(R.color.camera_button_grey))
+                markerNumberTextView?.setTextColor(resources.getColor(R.color.markerNumberTextView))
             } else {
                 markerNumberTextView?.setTextColor(resources.getColor(R.color.colorWhite))
             }

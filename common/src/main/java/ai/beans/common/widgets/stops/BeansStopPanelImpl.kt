@@ -3,16 +3,27 @@ package ai.beans.common.widgets.stops
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.R
+import ai.beans.common.application.BeansApplication
+import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
 import ai.beans.common.events.*
+import ai.beans.common.location.LocationHolder
+import ai.beans.common.maps.BeansMapFragmentAddressDetailsImpl
+import ai.beans.common.maps.BeansMapFragmentApartmentDetailsImpl
 import ai.beans.common.panels.PanelControlInterface
 import ai.beans.common.panels.PanelInteractionListener
+import ai.beans.common.pojo.GeoPoint
 import ai.beans.common.pojo.RouteStopStatus
 import ai.beans.common.pojo.RouteStop
+import ai.beans.common.pojo.search.NoteResponse
+import ai.beans.common.pojo.search.SearchResponse
+import ai.beans.common.viewmodels.CurrentActiveRouteStopViewModel
+import ai.beans.common.viewmodels.RouteStopsViewModel
 import ai.beans.common.widgets.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -29,15 +40,17 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
-class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlInterface {
+class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlInterface, NoteButtonsListener {
 
     var mapCardImpl: BeansStopCardImpl? = null
+    var detailsCard: RouteStopBeansDetails? = null
     var behaviour: BottomSheetBehavior<View>? = null
     var listener: PanelInteractionListener? = null
     var childStopsContainer: ConstraintLayout? = null
     var initVisibilityState = BottomSheetBehavior.STATE_COLLAPSED
     var fragment: BeansFragment? = null
-    var peekHeight: Int = 500
+    var hideMoreInfoButton: Boolean = false
+    var peekHeight: Int = 800
 
     var prevButton: ImageButton? = null
     var nextButton: ImageButton? = null
@@ -61,6 +74,9 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         mapCardImpl = v.findViewById(R.id.stop_card)
         mapCardImpl?.setActionListener(this)
         mapCardImpl?.showActionsPanel()
+
+        detailsCard = v.findViewById(R.id.beans_stop_details)
+        detailsCard?.noteButtonListener = this
 
         prevButton = v.findViewById(R.id.previousStop)
         nextButton = v.findViewById(R.id.nextStop)
@@ -89,9 +105,10 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 behaviour = BottomSheetBehavior.from(this@BeansStopPanelImpl as View)
+                //behaviour?.peekHeight = 200
                 behaviour?.state = initVisibilityState
-                peekHeight = behaviour!!.peekHeight
-//                behaviour?.peekHeight = peekHeight
+                // peekHeight = behaviour!!.peekHeight
+                behaviour?.peekHeight = peekHeight
                 behaviour?.setBottomSheetCallback(sheetCallback)
                 viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
@@ -102,7 +119,6 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         listView = v.findViewById(R.id.routeListView)
         listView?.recycledViewPool?.setMaxRecycledViews(0, 10);
         listView?.setItemViewCacheSize(10);
-        //listView?.isNestedScrollingEnabled = false
         ViewCompat.setNestedScrollingEnabled(listView!!, false)
         adapter?.attachAdapterToRecyclerView(listView!!)
         listView?.adapter = adapter
@@ -120,9 +136,15 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
     fun updateStopStatus(stop: RouteStop, status: RouteStopStatus) {
         MainScope().launch {
             if (stop != null) {
+                stop.status = status
                 if (!showingChildStops) {
-                    stop.status = status
                     renderStopCard(stop)
+                } else {
+                    var routeDataViewModel = ViewModelProviders.of(fragment!!.activity!!,
+                        ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+                        RouteStopsViewModel::class.java)
+                    var parentStop = routeDataViewModel.getStopDetails(stop!!.parent_list_item_id!!)!!
+                    renderStopCard(parentStop)
                 }
                 EventBus.getDefault().post(
                     UpdateStopStatus(stopId = stop!!.list_item_id!!, status = status)
@@ -157,6 +179,35 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
             updateStopStatus(currentStop, RouteStopStatus.NEW)
         } else {
             updateStopStatus(currentStop, RouteStopStatus.FAILED)
+        }
+    }
+
+    override fun onMoreInfoClicked(currentStop: RouteStop?) {
+        var locationHolder = ViewModelProviders.of(fragment?.getMainActivity()!!,
+            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+            LocationHolder::class.java)
+        locationHolder?.let {
+            var b = Bundle()
+            b.putString("ADDRESS", currentStop!!.address)
+            b.putString("UNIT", currentStop!!.unit)
+            b.putString("UNIT", currentStop!!.unit)
+            b.putString("STOP_ID", currentStop!!.list_item_id)
+            var currLocation = locationHolder?.currentLocation
+            var center : GeoPoint?= null
+            if(currLocation != null) {
+                center = GeoPoint()
+                center.lat = currLocation?.latitude
+                center.lng = currLocation?.longitude
+                b.putString("LATITUDE", center.latitudeAsString())
+                b.putString("LONGITUDE", center.latitudeAsString())
+            }
+
+            if(currentStop.has_apartments) {
+                fragment?.getMainActivity()?.launchFragment(BeansMapFragmentApartmentDetailsImpl::class.java, b)
+            } else {
+                fragment?.getMainActivity()?.launchFragment(BeansMapFragmentAddressDetailsImpl::class.java, b)
+            }
+
         }
     }
 
@@ -195,8 +246,8 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
 
     override fun setOwnerFragment(ownerFragment: BeansFragment) {
         fragment = ownerFragment
-        var bus = BeansBusStation.BusStation.getBus(fragment!!.fragmentId!!)
-        //XX bus?.register(this)
+//        var bus = BeansBusStation.BusStation.getBus(fragment!!.fragmentId!!)
+//        bus?.register(this)
     }
 
     override fun setPanelInteractionListener(listener: PanelInteractionListener) {
@@ -220,6 +271,9 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         } else {
             mapCardImpl?.hidePrevNextButtons()
         }
+        if (hideMoreInfoButton) {
+            mapCardImpl?.hideMoreInfoButton()
+        }
         mapCardImpl?.visibility = View.VISIBLE
 
         if (newStop.children != null && newStop.children?.size!! > 0) {
@@ -227,35 +281,6 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         } else {
             renderChildStopsList(ArrayList<RouteStop>())
         }
-    }
-
-    fun renderChildStops(childStops: ArrayList<RouteStop>?) {
-        if (!childStops.isNullOrEmpty()) {
-            showingChildStops = true
-            val inflator = LayoutInflater.from(context)
-            for (index in 0 until childStops!!.size) {
-                //for(stop in rowViewModel!!.childStops!!) {
-                var stop = childStops!![index]
-                val v = inflator.inflate(R.layout.route_list_child_item, null)
-                var apartmentStopCard =
-                    v.findViewById<BeansStopCardApartmentImpl>(R.id.apt_stop_card)
-//                apartmentStopCard?.deliveredButton?.setOnClickListener {
-//                    Log.d("safd","d")
-//                }
-                apartmentStopCard.actionButtonListener = this
-                //apartmentStopCard.renderStop(stop)
-                if (index == childStops!!.size - 1) {
-                    apartmentStopCard.hideConnectorLine()
-                } else {
-                    apartmentStopCard.showConnectorLine()
-                }
-                childStopsContainer?.addView(v)
-            }
-            childStopsContainer?.visibility = View.VISIBLE
-        } else {
-            removeChildRows()
-        }
-
     }
 
     fun renderChildStopsList(childStops: ArrayList<RouteStop>?) {
@@ -277,6 +302,32 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         listView?.visibility = View.GONE
     }
 
+    fun hideBeansNotes() {
+        detailsCard?.visibility = View.GONE
+    }
+
+
+    fun renderBeansNotes(routes: SearchResponse?, notes: NoteResponse?, customMarkerImagesViewModel: CustomMarkerImagesViewModel?) {
+        detailsCard?.visibility = View.VISIBLE
+        detailsCard?.setPercentageTiles(null, customMarkerImagesViewModel)
+        val bubbleData = routes?.routes?.get(0)?.route_ui_data?.tiles
+        detailsCard?.setInfoBubbles(bubbleData, customMarkerImagesViewModel)
+        detailsCard?.setNote(notes)
+    }
+
+    override fun noteWidgetClicked(event: ShowDataEntryDialog) {
+        fragment?.let {
+            var bus = BeansBusStation.BusStation.getBus(it.fragmentId!!)
+            if(bus != null) {
+                bus.post(event)
+            }
+        }
+    }
+
+    fun updateNotes(note: NoteResponse) {
+        detailsCard?.setNote(note)
+    }
+
     fun showPrevNextButtons() {
         //prevButton?.visibility = View.VISIBLE
         //nextButton?.visibility = View.VISIBLE
@@ -291,7 +342,6 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
         prevButton?.visibility = View.GONE
         nextButton?.visibility = View.GONE
     }
-
 
     fun setCurrentPanelVisibilityState(state: Int) {
         initVisibilityState = state
@@ -312,8 +362,16 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
                 if (initVisibilityState != newState) {
                     initVisibilityState = newState
                     listener?.onPanelStateChanged(newState)
-                    if (newState == BottomSheetBehavior.STATE_COLLAPSED || newState == BottomSheetBehavior.STATE_HIDDEN) {
-                        EventBus.getDefault().post(HideCard())
+                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                        var routeDataViewModel = ViewModelProviders.of(fragment!!.activity!!,
+                            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)).get(
+                            RouteStopsViewModel::class.java)
+                        routeDataViewModel.setCurrentStop(null)
+                        var currentStopViewModel = ViewModelProviders.of(
+                            fragment!!.activity!!,
+                            ViewModelProvider.AndroidViewModelFactory(BeansApplication.getInstance()!!)
+                        ).get(CurrentActiveRouteStopViewModel::class.java)
+                        currentStopViewModel.setCurrentRouteStop(null)
                     }
                 }
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {

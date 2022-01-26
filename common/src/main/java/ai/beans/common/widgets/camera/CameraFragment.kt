@@ -103,10 +103,6 @@ class CameraFragment : BeansFragment() , TextureView.SurfaceTextureListener {
         cameraHelper?.closeCamera()
     }
 
-    override fun hideBottomBar() : Boolean {
-        return true;
-    }
-
     override fun onDestroy() {
         super.onDestroy()
     }
@@ -138,8 +134,6 @@ class CameraFragment : BeansFragment() , TextureView.SurfaceTextureListener {
                 cameraHelper?.setFlashState(!state)
             }
         }
-
-
     }
 
     private fun setupOverlay(v : View?) {
@@ -187,9 +181,6 @@ class CameraFragment : BeansFragment() , TextureView.SurfaceTextureListener {
 
     fun getHandler() : Handler {
         return handler
-    }
-
-    override fun setTitle() {
     }
 
     override fun setScreenName() {

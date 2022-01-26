@@ -22,8 +22,7 @@ class RootFragment : BeansFragment() {
                 fragmentDataBundle = arguments!!.getBundle("FRAGMENT_DATA")
             }
     }
-    //Class.forName(className).kotlin
-//
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.root_fragment, container, false)
         return view
@@ -31,17 +30,17 @@ class RootFragment : BeansFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(childFragmentManager.backStackEntryCount == 0)
+        if (childFragmentManager.backStackEntryCount == 0) {
             childFragmentClass?.let { launchChildFragment(Class.forName(it), fragmentDataBundle) }
+        }
     }
 
     private fun launchChildFragment(fragmentClass: Class<*>, bundle: Bundle?,
                                     asDialog: Boolean = false,
                                     replace : Boolean = false) {
-        if(asDialog) {
+        if (asDialog) {
             val childFragment = fragmentClass.newInstance() as DialogFragment
-            childFragment.show(childFragmentManager,
-                    "image_source_picker")
+            childFragment.show(childFragmentManager, "image_source_picker")
         } else {
             val childFragment = fragmentClass.newInstance() as BeansFragment
             childFragment.arguments = bundle
@@ -58,12 +57,12 @@ class RootFragment : BeansFragment() {
     }
 
     override fun handleBack(): Boolean {
-        if(childFragmentManager.backStackEntryCount == 1) {
+        if (childFragmentManager.backStackEntryCount == 1) {
             return false
         } else {
             childFragmentManager.backStackEntryCount.toString()
             val childFragment = childFragmentManager.findFragmentByTag(childFragmentManager.backStackEntryCount.toString())
-            if(childFragment != null && childFragment is BeansFragment) {
+            if (childFragment != null && childFragment is BeansFragment) {
                 if (!childFragment.handleBack()) {
                     childFragmentManager.popBackStackImmediate()
                     return true
@@ -93,10 +92,6 @@ class RootFragment : BeansFragment() {
     }
 
     override fun setScreenName() {
+        screenName = "root"
     }
-
-
-    override fun setTitle() {
-    }
-
 }

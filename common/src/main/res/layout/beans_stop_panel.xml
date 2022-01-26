@@ -52,4 +52,13 @@
         android:layout_below="@+id/childStopsContainer" />
 
 
+    <ai.beans.common.widgets.RouteStopBeansDetails
+        android:id="@+id/beans_stop_details"
+        android:layout_below="@+id/routeListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorWhite"/>
+
 </RelativeLayout>

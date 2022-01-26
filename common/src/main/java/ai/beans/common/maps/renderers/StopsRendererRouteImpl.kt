@@ -38,7 +38,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class RouteStopsRenderer(ownerFragment: BeansFragment, savedStateBundle: Bundle?) :
+class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bundle?) :
     BeansMapRenderer(ownerFragment, savedStateBundle),
     LifecycleObserver,
     PanelInteractionListener {
@@ -115,10 +115,10 @@ class RouteStopsRenderer(ownerFragment: BeansFragment, savedStateBundle: Bundle?
         mapReadyAndMapDataReady = MultiStateObserver()
         mapReadyAndMapDataReady?.setStateIds(arrayListOf<Int>(1, 3))
 
-        /*XX mapReadyAndMapDataReady?.setObserverFor(
+        mapReadyAndMapDataReady?.setObserverFor(
             parentFragment.viewLifecycleOwner,
             routeDataViewModel?.hasNewRoutesData!!, 1
-        )*/
+        )
 
         mapReadyAndMapDataReady?.setObserverFor(
             parentFragment.viewLifecycleOwner,
@@ -131,8 +131,7 @@ class RouteStopsRenderer(ownerFragment: BeansFragment, savedStateBundle: Bundle?
             Observer {
                 if (parentFragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                     Log.d("ROUTE_STOP", "in MSO Observer")
-                    //updateViews()
-                    setTitle()
+                    updateViews()
                 }
             })
 
@@ -149,7 +148,6 @@ class RouteStopsRenderer(ownerFragment: BeansFragment, savedStateBundle: Bundle?
                 if (parentFragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                     Log.d("ROUTE_STOP", "in MSO Observer")
                     updateViews()
-                    //setTitle()
                 }
             })
 
@@ -178,7 +176,6 @@ class RouteStopsRenderer(ownerFragment: BeansFragment, savedStateBundle: Bundle?
             parentFragment.viewLifecycleOwner,
             Observer {
                 if (parentFragment.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                    updateViews()
                     updatePaths()
                 }
             })

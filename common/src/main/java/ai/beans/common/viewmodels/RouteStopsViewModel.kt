@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.util.LinkedHashMap
 
 class RouteStopsViewModel(application: Application) : AndroidViewModel(application) , LifecycleObserver  {
+    var hasNewRoutesData = MutableLiveData<Boolean>()
     var hasNewRoutePath = MutableLiveData<Boolean>()
     var hasNewSelectedStop = MutableLiveData<Boolean>()
 
@@ -54,6 +55,11 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
         MainScope().launch {
             refreshInMemoryStopData()
             refreshPathsForOptimizedRoute()
+
+            MainScope().launch {
+                Log.d("SYNC", "Notify Views")
+                hasNewRoutesData.value = true
+            }
         }
     }
 
@@ -165,8 +171,8 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
         return allStopsIncludingChildren.filter { stop -> stop.parent_list_item_id == stopId }
     }
 
-    suspend fun getStopDetails(stopId: String): RouteStop? {
-        return allStopsIncludingChildren.filter { stop -> stop.parent_list_item_id == stopId }.getOrNull(0)
+    fun getStopDetails(stopId: String): RouteStop? {
+        return allStopsIncludingChildren.filter { stop -> stop.list_item_id == stopId }.getOrNull(0)
     }
 
     fun setCurrentStop(stop: RouteStop?) {
@@ -257,7 +263,7 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
             }
 
             if (!(task.value.type == RouteStopType.WAREHOUSE_PICKUP || task.value.type == RouteStopType.WAREHOUSE_DROPOFF)) {
-                task.value.route_display_number = task.index
+                task.value.route_display_number = task.index + 1
                 allStops.add(task.value)
                 allStopsHashMap.put(task.value.list_item_id!!, task.value)
                 optimizedRouteStopMap.put(task.value.list_item_id!!, task.index)
@@ -267,8 +273,6 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
                 var childList = getAllChildStops(task.value.list_item_id!!)
                 var aptList = ArrayList<RouteStop>()
                 for (aptStop in childList) {
-                    aptList.add(aptStop)
-                    aptList.add(aptStop)
                     aptList.add(aptStop)
                 }
                 if (!aptList.isEmpty()) {

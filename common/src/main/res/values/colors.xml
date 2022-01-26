@@ -33,26 +33,11 @@
     <color name="StatusInfoGrey">#8e8e93</color>
     <color name="StatusInfoDarkGrey">#494949</color>
 
-    <color name="default_text">#000000</color>
-    <color name="default_hint_text">#999999</color>
+    <color name="permissionScreenBackground">#0a2239</color>
 
-    <color name="login_screen_text">#4a4a4a</color>
-    <color name="login_tutorial_blue">#1d7ddb</color>
-    <color name="login_tutorial_pink">#ff6283</color>
+    <color name="markerNumberTextView">#100a2239</color>
 
-    <color name="permission_screen_background">#0a2239</color>
-
-    <color name="info_row_border_shadow">#e6e6e6</color>
-
-    <color name="filter_button_text_color">#676464</color>
-
-    <color name="filter_fragment_text_color">#007aff</color>
-
-    <color name="pull_to_refresh_text_color">#d6d6d6</color>
-
-    <color name="camera_button_grey">#100a2239</color>
-
-    <color name="root_fragment_background">#ffffff</color>
+    <color name="rootFragmentBackground">#ffffff</color>
 
     <color name="toolbarBackground">#FFFFFF</color>
 
@@ -60,12 +45,10 @@
 
     <color name="infoRowBackground">#E6E6E6</color>
 
-    <color name="route_stop_path">#007ccf</color>
+    <color name="routeStopPath">#007ccf</color>
 
-    <color name="color_shadow_start">#00000000</color>
-    <color name="color_shadow_end">#4b000000</color>
-
-    <color name="marker_number_optimized_color">#004D80</color>
+    <color name="colorShadowStart">#00000000</color>
+    <color name="colorShadowEnd">#4b000000</color>
 
     <color name="colorStatusBar">#000000</color>
 
@@ -90,4 +73,9 @@
 
     <color name="aptStopCardBackground">#f5f7f9</color>
     <color name="aptCardConnectorLineColor">#e7e7e7</color>
+
+    <color name="sidFilterCheckMarkColor">#000000</color>
+    <color name="bubbleTextDisabled">#33d5d5d5</color>
+    <color name="bubbleText">#000000</color>
+
 </resources>

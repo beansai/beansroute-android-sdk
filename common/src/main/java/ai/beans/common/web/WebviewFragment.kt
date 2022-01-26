@@ -212,26 +212,6 @@ open class WebviewFragment : BeansFragment() {
         }
     }
 
-
-    override fun setTitle() {
-        toolbar?.title?.text = title
-    }
-
-    override fun setupToolbar() {
-        super.setupToolbar()
-        if(showShareButton) {
-            toolbar?.setRightShareButton(object : View.OnClickListener{
-                override fun onClick(v: View?) {
-                    val share = Intent(Intent.ACTION_SEND)
-                    share.type = "text/plain"
-                    share.putExtra(Intent.EXTRA_SUBJECT, title)
-                    share.putExtra(Intent.EXTRA_TEXT, url)
-                    startActivity(Intent.createChooser(share, "Share Proof!"))
-                }
-            })
-        }
-    }
-
     override fun handleBack(): Boolean {
         if(webView!!.canGoBack()) {
             webView!!.goBack()

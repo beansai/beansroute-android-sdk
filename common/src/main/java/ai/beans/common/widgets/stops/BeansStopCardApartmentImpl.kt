@@ -26,7 +26,6 @@ class BeansStopCardApartmentImpl : ConstraintLayout {
     var connectorLine: View ?= null
     var currentStop: RouteStop? = null
 
-
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
     }
@@ -145,7 +144,4 @@ class BeansStopCardApartmentImpl : ConstraintLayout {
     fun setActionListener(listener: ActionButtonListener) {
         actionButtonListener = listener
     }
-
-
-
 }

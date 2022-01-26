@@ -333,7 +333,7 @@ class BeansMapOSMImpl : MapView, OnFirstLayoutListener, MapListener, MapEventsRe
     override fun createPolyline(points: ArrayList<ai.beans.common.pojo.GeoPoint>): BeansPolyline? {
         var polyline = Polyline(this)
         polyline.outlinePaint.strokeWidth = 7f
-        polyline.outlinePaint.color = resources.getColor(R.color.route_stop_path)
+        polyline.outlinePaint.color = resources.getColor(R.color.routeStopPath)
 
         for (point in points) {
             polyline.addPoint(GeoPoint(point.lat!!, point.lng!!))

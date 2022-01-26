@@ -16,6 +16,7 @@ class BeansStopPnlActionsImpl : RelativeLayout {
     var btnDeliveredImpl: BeansStopBtnDeliveredImpl? = null
     var btnAttemptedImpl: BeansStopBtnAttemptedImpl? = null
     var navigateButton: ImageButton? = null
+    var infoButton : ImageButton ?= null
     var currentStop: RouteStop? = null
     var buttonsHidden: Boolean = true
     var prevStopButton: Button? = null
@@ -38,6 +39,7 @@ class BeansStopPnlActionsImpl : RelativeLayout {
         btnDeliveredImpl = v.findViewById(R.id.deliveredButton)
         btnAttemptedImpl = v.findViewById(R.id.attemptedButton)
         navigateButton = v.findViewById(R.id.navigateActionButton)
+        infoButton = v.findViewById(R.id.infoButton)
         prevStopButton = v.findViewById(R.id.prevButton)
         nextStopButton = v.findViewById(R.id.nextButton)
     }
@@ -48,17 +50,20 @@ class BeansStopPnlActionsImpl : RelativeLayout {
             visibility = View.VISIBLE
             if (currentStop!!.has_apartments) {
                 //Apt parent stop
+                infoButton?.visibility = View.VISIBLE
                 navigateButton?.visibility = View.VISIBLE
                 btnDeliveredImpl?.visibility = View.GONE
                 btnAttemptedImpl?.visibility = View.GONE
 
-            } else if (currentStop!!.parent_list_item_id != null) {
+            } else if (currentStop!!.parent_list_item_id != null && currentStop!!.parent_list_item_id != "") {
                 //Apt child stop
+                infoButton?.visibility = View.GONE
                 navigateButton?.visibility = View.VISIBLE
                 btnDeliveredImpl?.visibility = View.VISIBLE
                 btnAttemptedImpl?.visibility = View.VISIBLE
             } else {
                 //Single family stop
+                infoButton?.visibility = View.VISIBLE
                 navigateButton?.visibility = View.VISIBLE
                 btnDeliveredImpl?.visibility = View.VISIBLE
                 btnAttemptedImpl?.visibility = View.VISIBLE
@@ -78,6 +83,7 @@ class BeansStopPnlActionsImpl : RelativeLayout {
             }
 
             if (it.status == RouteStopStatus.NOLOCATION) {
+                infoButton?.visibility = View.GONE
                 navigateButton?.visibility = View.GONE
             }
         }

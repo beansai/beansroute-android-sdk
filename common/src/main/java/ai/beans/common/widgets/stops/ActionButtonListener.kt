@@ -6,6 +6,7 @@ interface ActionButtonListener {
     fun onNavigateClicked(currentStop: RouteStop?)
     fun onDeliveredClicked(currentStop: RouteStop?)
     fun onAttemptedClicked(currentStop: RouteStop?)
+    fun onMoreInfoClicked(currentStop: RouteStop?)
     fun onPrevStopClicked(currentStop: RouteStop?)
     fun onNextStopClicked(currentStop: RouteStop?)
 }

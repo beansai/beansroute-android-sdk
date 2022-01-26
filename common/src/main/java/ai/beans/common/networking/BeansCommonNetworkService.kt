@@ -15,10 +15,10 @@ object BeansCommonNetworkService {
         httpClient.connectTimeout(300, TimeUnit.SECONDS);
         httpClient.readTimeout(300, TimeUnit.SECONDS);
         httpClient.writeTimeout(300, TimeUnit.SECONDS);
-        httpClient.addInterceptor(LibInit.networkInterceptor)
+        httpClient.addInterceptor(NetworkInterceptor())
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(LibInit.API_SERVER)
+            .baseUrl("https://api2.beans.ai")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient.build())
             .build()

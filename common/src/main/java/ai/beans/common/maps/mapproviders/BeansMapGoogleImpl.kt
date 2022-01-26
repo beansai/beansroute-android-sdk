@@ -372,7 +372,7 @@ class BeansMapGoogleImpl : MapView, GoogleMap.OnCameraIdleListener, BeansMapInte
             polylineOptions.add(LatLng(point.lat!!, point.lng!!))
         }
         polylineOptions.width(7f)
-        polylineOptions.color(resources.getColor(R.color.route_stop_path))
+        polylineOptions.color(resources.getColor(R.color.routeStopPath))
 
         var polyline = mMap?.addPolyline(polylineOptions)
         if (polyline != null) {

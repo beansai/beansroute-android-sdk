@@ -1,4 +1,4 @@
-package ai.beans.common.pojo
+package ai.beans.common.pojo.search
 
 enum class MapMarkerType {
     UNIT,

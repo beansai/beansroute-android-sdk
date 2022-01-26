@@ -10,7 +10,6 @@ class AppInfo {
     var versionCodeString: String? = null
     var userAgent: String ?= null
 
-
     constructor(context: Context) {
         this.context = context
 

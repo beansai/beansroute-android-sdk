@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:letterSpacing="0.04"
             android:fontFamily="sans-serif-condensed"
             android:text="SID"
@@ -43,7 +43,7 @@
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/packageInfoLabel"
             android:letterSpacing="0.04"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="ITEMS"
             android:layout_marginLeft="18dp"
             />

@@ -7,7 +7,7 @@
     android:focusable="true"
     android:clickable="true"
     android:visibility="gone"
-    android:background="@color/permission_screen_background">
+    android:background="@color/permissionScreenBackground">
 
     <ImageView
         android:id="@+id/permissionImage"

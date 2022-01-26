@@ -1,4 +1,4 @@
-package ai.beans.common.pojo
+package ai.beans.common.pojo.custom_markers
 
 class MarkerNoteData {
     var marker_id: String?=null

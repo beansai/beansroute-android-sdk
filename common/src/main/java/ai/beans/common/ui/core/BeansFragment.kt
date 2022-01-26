@@ -1,10 +1,9 @@
 package ai.beans.common.ui.core
+
 import ai.beans.common.DummyEvent
-import ai.beans.common.R
 import ai.beans.common.analytics.fireScreenViewEvent
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.permissions.PermissionManager
-import ai.beans.common.widgets.CommonToolbar
 import ai.beans.common.widgets.HUD
 import ai.beans.common.widgets.WaitSpinner
 import android.content.Context
@@ -19,10 +18,8 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
-
 abstract class BeansFragment : DialogFragment() {
     lateinit var permmisionManager : PermissionManager
-    var toolbar : CommonToolbar?= null
     var waitSpinner : WaitSpinner?= null
     var hud : HUD?= null
     var screenName :String ?= null
@@ -103,21 +100,11 @@ abstract class BeansFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar = view.findViewWithTag(getString(R.string.common_tool_bar))
-        setTitle()
-        setupToolbar()
-    }
-
-    open fun setupToolbar() {
-
     }
 
     override fun onResume() {
         super.onResume()
         getMainActivity()?.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        if(handleBottomBarVisibility()) {
-            (activity as BeansActivity).hideBottomBar(hideBottomBar())
-        }
         trackScreenView()
     }
 
@@ -146,21 +133,6 @@ abstract class BeansFragment : DialogFragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            (activity as BeansActivity).hideBottomBar(hideBottomBar())
-        } else {
-            // Do your Work
-        }
-    }
-
-    open fun hideBottomBar(): Boolean {
-        //default is to always show the bar.
-        //Any fragment can override this method and show/hide the bar
-        return false
-    }
-
-    open fun handleBottomBarVisibility() : Boolean {
-        return true
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -233,17 +205,6 @@ abstract class BeansFragment : DialogFragment() {
             }
         }
     }
-
-    fun setLeftToolbarButton(title: String, listener : View.OnClickListener) {
-        toolbar?.setLeftButtonTitle(title, listener)
-    }
-
-    fun setRightToolbarButton(title: String, listener : View.OnClickListener) {
-        toolbar?.setRightButtonTitle(title, listener)
-    }
-
-
-    abstract fun setTitle()
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event : DummyEvent) {

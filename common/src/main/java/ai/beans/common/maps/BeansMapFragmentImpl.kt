@@ -6,7 +6,6 @@ import ai.beans.common.analytics.fireEvent
 import ai.beans.common.application.BeansApplication
 import ai.beans.common.events.*
 import ai.beans.common.location.LocationHolder
-import ai.beans.common.maps.renderers.RouteStopsRenderer
 import ai.beans.common.maps.*
 import ai.beans.common.maps.boundingbox.BeansMapBoundingBox
 import ai.beans.common.maps.mapproviders.BeansMapInterface
@@ -18,11 +17,8 @@ import ai.beans.common.maps.tiledownlader.BeansTileInfo
 import ai.beans.common.pojo.GeoPoint
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.utils.MultiStateObserver
-import ai.beans.common.widgets.stops.BeansStopPanelImpl
 import android.Manifest
-import android.app.Activity
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.Rect
@@ -34,14 +30,10 @@ import android.widget.TextView
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import android.location.Location
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import androidx.lifecycle.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.greenrobot.eventbus.EventBus
 
 
@@ -55,6 +47,7 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
     private var myLocationButton: RoundMapButton? = null
     private var satelliteButton: RoundMapButton? = null
     private var offlineButton: RoundMapButton? = null
+    private var backButton: RoundMapButton?  = null
 
     private var isLocationServiceRunning = false
 
@@ -69,11 +62,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
     var onlineMapWidgetContainer: FrameLayout? = null
     var offlineMapWidgetContainer: FrameLayout? = null
 
-    var routeStopsRenderer: RouteStopsRenderer? = null
-    var stopCardPanelImpl: BeansStopPanelImpl? = null
-
-    var currentPanelVisibilityState = BottomSheetBehavior.STATE_HIDDEN
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -85,7 +73,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
             } else {
                 useOnlineMaps = true
             }
-
         }
 
         locationHolder = ViewModelProviders.of(
@@ -94,9 +81,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         ).get(
             LocationHolder::class.java
         )
-
-        routeStopsRenderer = RouteStopsRenderer(this, savedInstanceState)
-        routeStopsRenderer?.plugIn()
     }
 
     override fun onCreateView(
@@ -119,20 +103,17 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
 
         onlineMapWidgetContainer = v.findViewById(R.id.mapWidgetContainer)
         offlineMapWidgetContainer = v.findViewById(R.id.offlineMapWidgetContainer)
-        /*var prefsMan = PrefManager(context)*/
         if (useOnlineMaps) {
             onlineMapWidgetContainer?.visibility = View.VISIBLE
             offlineMapWidgetContainer?.visibility = View.GONE
 
             mapviewInterface = v.findViewById<View>(R.id.embedded_map_view) as BeansMapInterface
-            routeStopsRenderer?.setMap(this)
         } else {
             onlineMapWidgetContainer?.visibility = View.GONE
             offlineMapWidgetContainer?.visibility = View.VISIBLE
 
             mapviewInterface =
                 v.findViewById<View>(R.id.embedded_map_view_offline) as BeansMapInterface
-            routeStopsRenderer?.setMap(this)
         }
 
         mapviewInterface?.let {
@@ -195,6 +176,13 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
             }
         }
 
+        backButton = v.findViewById(R.id.nav_back)
+        backButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {
+            override fun buttonClicked(btnId: Int, state: Boolean) {
+                activity?.onBackPressed()
+            }
+        }
+
         multiStateObserver = MultiStateObserver()
         multiStateObserver?.setStateIds(arrayListOf<Int>(LOCATION_SERVICE_OK, MAP_VIEW_OK))
 
@@ -217,13 +205,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
             }
         })
 
-        //Setup the two panels that slide in from below (Map and Sid filter)
-        stopCardPanelImpl = v.findViewById(R.id.containerPanel)
-        stopCardPanelImpl?.setOwnerFragment(this)
-        if (savedInstanceState == null) {
-            stopCardPanelImpl?.initVisibilityState = currentPanelVisibilityState
-        }
-
         return v
     }
 
@@ -236,7 +217,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         }
 
         view?.let {
-            //checkForLocationPermission(it)
             setupMap()
         }
     }
@@ -263,7 +243,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
                 Log.e("Error", "Error while attempting MapView.onDestroy(), ignoring exception", e)
             }
         }
-        routeStopsRenderer?.unplug()
         super.onDestroy()
     }
 
@@ -367,7 +346,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         } else {
             return flag.value!!
         }
-
     }
 
     override fun registerMapEventListener(rendererId: String, listener: BeansMapViewListener) {
@@ -471,9 +449,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         screenName = "map"
     }
 
-    override fun setTitle() {
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -509,27 +484,10 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         }
     }
 
-
     override fun mapReady() {
         //Map is now ready and attached...
         //Check if we have location service ready...
         Log.d("Zoom_Level", "mapReady")
-        //Load ski based on dark-mode on/off
-        val mode = context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        /*when (mode) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                mapView?.setupMapSkin(R.raw.google_map_skin_dark_mode)
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                mapView?.setupMapSkin(R.raw.google_map_skin)
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-                mapView?.setupMapSkin(R.raw.google_map_skin)
-            }
-            else -> {
-                mapView?.setupMapSkin(R.raw.google_map_skin)
-            }
-        }*/
         if (savedZoom != null) {
             mapviewInterface?.setCurrentZoomLevel(savedZoom!!)
         } else {
@@ -538,9 +496,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         if (savedLocation != null) {
             mapviewInterface?.setCurrentLocation(savedLocation!!, savedZoom, false)
         }
-        //if(isLocationServiceRunning)
-        //  setupMap()
-
     }
 
     override fun onMapClicked(location: LatLng) {
@@ -626,7 +581,6 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         }
     }
 
-
     fun setupMap() {
         MainScope().launch {
             if (!permmisionManager.isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -646,64 +600,9 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
         mapviewInterface?.clearMapContents()
     }
 
-    override fun handleBottomBarVisibility(): Boolean {
-        return false
-    }
-
-
-    fun hideKeyboard() {
-        val imm: InputMethodManager? =
-            getMainActivity()?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        //Find the currently focused view, so we can grab the correct window token from it.
-        var view = getMainActivity()?.currentFocus
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = View(activity)
-        }
-        imm?.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: CollapseCard) {
-        MainScope().launch {
-            hideCurrentPanel()
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: ExpandCard) {
-        MainScope().launch {
-            showCurrentPanel()
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: HideCard) {
-        MainScope().launch {
-            hideCurrentPanel()
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: ShowCard) {
-        MainScope().launch {
-            showCurrentPanel()
-        }
-    }
-
-    fun hideCurrentPanel() {
-        stopCardPanelImpl?.hide()
-    }
-
-    fun showCurrentPanel() {
-        stopCardPanelImpl?.renderStopCard(routeStopsRenderer?.currentStopViewModel?.currentRouteStop?.value!!)
-        stopCardPanelImpl?.collapse()
-    }
-
     fun getVisibleRect(): Rect {
         var visibleRect = Rect()
         view?.getGlobalVisibleRect(visibleRect)
         return visibleRect
     }
-
 }

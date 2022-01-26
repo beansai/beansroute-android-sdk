@@ -2,6 +2,7 @@ package ai.beans.common.widgets.stops
 
 import ai.beans.common.R
 import ai.beans.common.maps.BeansMapFragmentImpl
+import ai.beans.common.maps.BeansMapFragmentRouteViewImpl
 import ai.beans.common.pojo.RouteStop
 import android.content.Context
 import android.content.Intent
@@ -16,8 +17,8 @@ class ChildStopAdapter(context: Context?) : RecyclerView.Adapter<ChildStopViewHo
     var recyclerView: RecyclerView?= null
     var inflater: LayoutInflater? = null
     var context : Context?= null
-    var routeStops: ArrayList<RouteStop> ?= null
-    var ownerFragmentBeans: BeansMapFragmentImpl?= null
+    var routeStops: ArrayList<RouteStop>? = null
+    var ownerFragment: BeansMapFragmentRouteViewImpl? = null
     var actionButtonListener : ActionButtonListener ?= null
 
     init {
@@ -56,17 +57,15 @@ class ChildStopAdapter(context: Context?) : RecyclerView.Adapter<ChildStopViewHo
         this.routeStops = routes
     }
 
-
-
     override fun onNavigateClicked(currentStop: RouteStop?) {
-        if(currentStop != null && ownerFragmentBeans != null) {
+        if(currentStop != null && ownerFragment != null) {
             val location =
                 "google.navigation:q=" + currentStop!!.position!!.latitudeAsString() + "," + currentStop!!.position!!.longitudeAsString()
             val gmmIntentUri = Uri.parse(location)
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
-            if (mapIntent.resolveActivity(ownerFragmentBeans!!.context!!.packageManager) != null) {
-                ownerFragmentBeans!!.startActivity(mapIntent)
+            if (mapIntent.resolveActivity(ownerFragment!!.context!!.packageManager) != null) {
+                ownerFragment!!.startActivity(mapIntent)
             }
         }
     }
@@ -87,6 +86,10 @@ class ChildStopAdapter(context: Context?) : RecyclerView.Adapter<ChildStopViewHo
         else {
             ownerFragment?.updateStopStatus(currentStop, RouteStopStatus.FAILED)
         }*/
+    }
+
+    override fun onMoreInfoClicked(currentStop: RouteStop?) {
+        ownerFragment?.showStopDetails(currentStop)
     }
 
     override fun onPrevStopClicked(currentStop: RouteStop?) {

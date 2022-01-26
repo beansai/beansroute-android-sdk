@@ -41,9 +41,19 @@
         android:layout_margin="4dp"
         android:text="Next"
         android:background="@drawable/bg_card_action_button_unselected"
-        app:layout_constraintEnd_toStartOf="@+id/navigateActionButton"
+        app:layout_constraintEnd_toStartOf="@+id/infoButton"
         app:layout_constraintStart_toEndOf="@+id/prevButton"
         android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/infoButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/bg_card_action_button_navigate"
+        android:src="@drawable/info"
+        app:layout_constraintEnd_toStartOf="@+id/navigateActionButton"
+        app:layout_constraintStart_toEndOf="@+id/nextButton" />
 
     <ImageButton
         android:id="@+id/navigateActionButton"
@@ -53,6 +63,6 @@
         android:background="@drawable/bg_card_action_button_navigate"
         android:src="@drawable/navigate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nextButton" />
+        app:layout_constraintStart_toEndOf="@+id/infoButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

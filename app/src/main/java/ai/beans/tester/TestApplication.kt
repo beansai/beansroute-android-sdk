@@ -6,7 +6,7 @@ import ai.beans.tester.networking.EnvConfig
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 
-class TestApplication :BeansApplication() {
+class TestApplication : BeansApplication() {
     companion object {
         fun getInstance() : BeansApplication? {
             return mInstance
