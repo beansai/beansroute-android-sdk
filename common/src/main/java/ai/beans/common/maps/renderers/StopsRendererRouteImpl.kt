@@ -325,7 +325,7 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
         //var mapView = getMapView()?.value
         if (mapInterface!!.isMapReady()) {
             //mapView.getMap()?.clear()
-            if (routeStops != null) {
+            if (routeStops != null && !routeStops.isEmpty()) {
                 var points = ArrayList<GeoPoint>()
                 var count = 1
                 for (stop in routeStops) {
@@ -360,6 +360,8 @@ class StopsRendererRouteImpl(ownerFragment: BeansFragment, savedStateBundle: Bun
                 }
                 Log.d("SYNC", "Rendering Complete")
                 isRenderRouteComplete?.value = true
+            } else {
+                savedLocation = null
             }
         }
     }

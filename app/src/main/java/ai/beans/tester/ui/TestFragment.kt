@@ -3,14 +3,19 @@ package ai.beans.tester.ui
 import ai.beans.common.MapMoved
 import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.events.UpdateStopStatus
+import ai.beans.common.networking.ApiResponse
+import ai.beans.common.networking.Envelope
+import ai.beans.common.networking.isp.BeansEnterpriseNetworkService
 import ai.beans.common.networking.isp.optimizeStopList
 import ai.beans.common.pojo.*
+import ai.beans.common.pojo.search.SearchResponse
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.viewmodels.RouteStopsViewModel
 import ai.beans.tester.R
 import ai.beans.tester.TestApplication
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +25,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.IOException
 
 class TestFragment : BeansFragment() {
     var routeDataViewModel: RouteStopsViewModel? = null
@@ -58,15 +64,9 @@ class TestFragment : BeansFragment() {
             0,
             0,
             0,
-            GeoPoint(37.372592119124505, -122.06539526711047),
-            GeoPoint(37.372592119124505, -122.06539526711047),
-            BeansAddressComponents(
-                "Mountain View",
-                "CA",
-                "94040",
-                "USA",
-                "1200 Dale Ave"
-            ),
+            null,
+            null,
+            null,
             "0005",
             "Notes for test5",
             null,
@@ -96,15 +96,9 @@ class TestFragment : BeansFragment() {
             0,
             0,
             0,
-            GeoPoint(37.324716785269935, -122.02028896011667),
-            GeoPoint(37.324716785269935, -122.02028896011667),
-            BeansAddressComponents(
-                "Cupertino",
-                "CA",
-                "95014",
-                "USA",
-                "10136 McLaren Pl"
-            ),
+            null,
+            null,
+            null,
             "0001",
             "Notes for test1",
             null,
@@ -134,15 +128,9 @@ class TestFragment : BeansFragment() {
             0,
             0,
             2,
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            BeansAddressComponents(
-                "Mountain View",
-                "CA",
-                "94040",
-                "USA",
-                "2255 Showers Dr"
-            ),
+            null,
+            null,
+            null,
             "0002",
             "Notes for test2",
             null,
@@ -172,15 +160,9 @@ class TestFragment : BeansFragment() {
             0,
             0,
             3,
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            BeansAddressComponents(
-                "Mountain View",
-                "CA",
-                "94040",
-                "USA",
-                "2255 Showers Dr"
-            ),
+            null,
+            null,
+            null,
             "0003",
             "Notes for test3",
             null,
@@ -210,15 +192,9 @@ class TestFragment : BeansFragment() {
             0,
             0,
             3,
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            GeoPoint(37.40734821753622, -122.10791942762405),
-            BeansAddressComponents(
-                "Mountain View",
-                "CA",
-                "94040",
-                "USA",
-                "2255 Showers Dr"
-            ),
+            null,
+            null,
+            null,
             "0004",
             "Notes for test4",
             null,
@@ -227,9 +203,23 @@ class TestFragment : BeansFragment() {
             0
         ))
 
-        routeDataViewModel?.setStops(stops)
-
         MainScope().launch {
+            stops.forEach {
+                try {
+                    val response = BeansEnterpriseNetworkService.BEANS_ENTERPRISE_API!!.getSearchResponse(it.address!!, it.unit, GeoPoint(0.0, 0.0))
+                    if (response != null && response.code() == 200) {
+                        it.display_position = response.body()!!.data!!.getNavigationPoint()
+                        it.position = response.body()!!.data!!.getNavigationPoint()
+                    } else {
+                        var managedResponse = ApiResponse.handleResponse(response, response.body())
+                        it.status = RouteStopStatus.NOLOCATION
+                    }
+                } catch (ex: IOException) {
+                    var managedResponse = ApiResponse.handleResponse(null, Envelope<SearchResponse>())
+                    it.status = RouteStopStatus.NOLOCATION
+                }
+            }
+
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
                 if (it.parent_list_item_id == null || it.parent_list_item_id == "") {

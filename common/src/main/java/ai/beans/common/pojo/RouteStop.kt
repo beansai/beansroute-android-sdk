@@ -70,6 +70,55 @@ class RouteStop(
 
     var children : ArrayList<RouteStop> ?= null
 
+    companion object {
+        fun simpleInstance(
+            id: String,
+            address: String,
+            unit: String,
+            type: RouteStopType,
+            status: RouteStopStatus
+        ): RouteStop {
+            return RouteStop(
+                id,
+                "",
+                "",
+                address,
+                unit,
+                address,
+                status,
+                0L,
+                0L,
+                0L,
+                0L,
+                "",
+                0L,
+                "",
+                type,
+                "",
+                "",
+                "",
+                0,
+                0,
+                0,
+                null,
+                null,
+                BeansAddressComponents(
+                    "Mountain View",
+                    "CA",
+                    "94040",
+                    "USA",
+                    "1200 Dale Ave"
+                ),
+                "",
+                "",
+                null,
+                false,
+                0,
+                0
+            )
+        }
+    }
+
     fun getCopy(): RouteStop {
         //Copy constructor to create a route obj.
         //Used ONLY while POSTING to server on status change
