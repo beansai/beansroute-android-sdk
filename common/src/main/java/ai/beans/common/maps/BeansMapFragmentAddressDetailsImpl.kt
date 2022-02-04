@@ -54,7 +54,7 @@ class BeansMapFragmentAddressDetailsImpl  : BeansFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_map_view_single, container, false)
 
-        val fragment_map = childFragmentManager?.findFragmentById(R.id.embedded_map_view)
+        val fragment_map = childFragmentManager?.findFragmentById(R.id.map_view)
         if (fragment_map != null) {
             mapFragment = fragment_map as BeansMapFragmentImpl
             addressDetailsRendererSingleImpl?.setMap(mapFragment!!)

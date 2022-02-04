@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/embedded_map_view"
+            android:id="@+id/map_view"
             android:name="ai.beans.common.maps.BeansMapFragmentImpl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
