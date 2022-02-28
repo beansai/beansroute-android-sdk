@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/image_container"
-        android:layout_width="32dp"
+        android:layout_width="24dp"
         android:layout_height="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,7 +17,8 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:background="@drawable/ic_clock"
-            android:layout_centerInParent="true"/>
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
     </RelativeLayout>
 
     <TextView
@@ -30,6 +31,7 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="14sp"
         android:textStyle="normal"
+        android:text="10am - 10pm"
         app:layout_constraintLeft_toRightOf="@+id/image_container"
         app:layout_constraintTop_toTopOf="parent" />
 

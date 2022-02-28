@@ -183,24 +183,23 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
     }
 
     override fun onMoreInfoClicked(currentStop: RouteStop?) {
-        var locationHolder = ViewModelProviders.of(fragment?.getMainActivity()!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
-            LocationHolder::class.java)
-        locationHolder?.let {
+//        var locationHolder = ViewModelProviders.of(fragment?.getMainActivity()!!,
+//            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
+//            LocationHolder::class.java)
+//        locationHolder?.let {
             var b = Bundle()
             b.putString("ADDRESS", currentStop!!.address)
             b.putString("UNIT", currentStop!!.unit)
-            b.putString("UNIT", currentStop!!.unit)
             b.putString("STOP_ID", currentStop!!.list_item_id)
-            var currLocation = locationHolder?.currentLocation
-            var center : GeoPoint?= null
-            if(currLocation != null) {
-                center = GeoPoint()
-                center.lat = currLocation?.latitude
-                center.lng = currLocation?.longitude
-                b.putString("LATITUDE", center.latitudeAsString())
-                b.putString("LONGITUDE", center.latitudeAsString())
-            }
+//            var currLocation = locationHolder?.currentLocation
+//            var center : GeoPoint?= null
+//            if(currLocation != null) {
+//                center = GeoPoint()
+//                center.lat = currLocation?.latitude
+//                center.lng = currLocation?.longitude
+//                b.putString("LATITUDE", center.latitudeAsString())
+//                b.putString("LONGITUDE", center.latitudeAsString())
+//            }
 
             if(currentStop.has_apartments) {
                 fragment?.getMainActivity()?.launchFragment(BeansMapFragmentApartmentDetailsImpl::class.java, b)
@@ -208,7 +207,7 @@ class BeansStopPanelImpl : NestedScrollView, ActionButtonListener, PanelControlI
                 fragment?.getMainActivity()?.launchFragment(BeansMapFragmentAddressDetailsImpl::class.java, b)
             }
 
-        }
+//        }
     }
 
     override fun onPrevStopClicked(currentStop: RouteStop?) {

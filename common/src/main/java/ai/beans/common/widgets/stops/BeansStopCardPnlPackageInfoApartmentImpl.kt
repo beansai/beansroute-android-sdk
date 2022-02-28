@@ -51,10 +51,16 @@ class BeansStopCardPnlPackageInfoApartmentImpl : RelativeLayout {
                 dropOffItemsContainer?.visibility = View.VISIBLE
                 dropOffSIDContainer?.visibility = View.VISIBLE
                 pickupContainer?.visibility = View.GONE
-                sid?.text = it.tracking_id
-                if(it.num_packages != null) {
-                    numPackages?.text = it.num_packages.toString()
+                if (it.tracking_id != null) {
+                    if (it.tracking_id!!.length <= 6) {
+                        sid?.text = it.tracking_id
+                    } else {
+                        sid?.text = it.tracking_id!!.substring(it.tracking_id!!.length - 6)
+                    }
+                } else {
+                    sid?.text = ""
                 }
+                numPackages?.text = "x" + (it.num_packages ?: 0).toString()
             } else if(it.type == RouteStopType.PICKUP ) {
                 dropOffItemsContainer?.visibility = View.GONE
                 dropOffSIDContainer?.visibility = View.GONE

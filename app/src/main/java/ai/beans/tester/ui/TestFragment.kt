@@ -297,9 +297,13 @@ class TestFragment : BeansFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: UpdateStopStatus) {
         print (event.stopId)
+        // Bring up AGMO POD screen here
+        // Based on fail/ success, call the code below (which will now be linked to the buttons on AGMO's POD screen)
         stops.forEach {
             if (it.list_item_id == event.stopId) {
-                it.status = event.status
+                // Do one of these:
+                it.status = RouteStopStatus.FINISHED
+                it.status = RouteStopStatus.FAILED
             }
         }
         routeDataViewModel?.setStops(stops)

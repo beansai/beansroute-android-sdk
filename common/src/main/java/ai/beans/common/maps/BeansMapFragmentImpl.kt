@@ -45,7 +45,7 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
     private var locationHolder: LocationHolder? = null
     private var myLocationButton: RoundMapButton? = null
     private var satelliteButton: RoundMapButton? = null
-    private var offlineButton: RoundMapButton? = null
+//    private var offlineButton: RoundMapButton? = null
     private var backButton: RoundMapButton?  = null
 
     private var isLocationServiceRunning = false
@@ -146,34 +146,34 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
             }
         }
 
-        offlineButton = v.findViewById(R.id.offline_button)
-        offlineButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {
-            override fun buttonClicked(btnId: Int, state: Boolean) {
-                if (isLocationServiceRunning) {
-                    offlineButton?.toggleButton()
-                    useOnlineMaps = !useOnlineMaps
-                    if (useOnlineMaps) {
-                        onlineMapWidgetContainer?.visibility = View.VISIBLE
-                        offlineMapWidgetContainer?.visibility = View.GONE
-
-                        mapviewInterface =
-                            v.findViewById<View>(R.id.embedded_map_view) as BeansMapInterface
-                        MainScope().launch {
-                            EventBus.getDefault().post(ResetStopViews())
-                        }
-                    } else {
-                        onlineMapWidgetContainer?.visibility = View.GONE
-                        offlineMapWidgetContainer?.visibility = View.VISIBLE
-
-                        mapviewInterface =
-                            v.findViewById<View>(R.id.embedded_map_view_offline) as BeansMapInterface
-                        MainScope().launch {
-                            EventBus.getDefault().post(ResetStopViews())
-                        }
-                    }
-                }
-            }
-        }
+//        offlineButton = v.findViewById(R.id.offline_button)
+//        offlineButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {
+//            override fun buttonClicked(btnId: Int, state: Boolean) {
+//                if (isLocationServiceRunning) {
+//                    offlineButton?.toggleButton()
+//                    useOnlineMaps = !useOnlineMaps
+//                    if (useOnlineMaps) {
+//                        onlineMapWidgetContainer?.visibility = View.VISIBLE
+//                        offlineMapWidgetContainer?.visibility = View.GONE
+//
+//                        mapviewInterface =
+//                            v.findViewById<View>(R.id.embedded_map_view) as BeansMapInterface
+//                        MainScope().launch {
+//                            EventBus.getDefault().post(ResetStopViews())
+//                        }
+//                    } else {
+//                        onlineMapWidgetContainer?.visibility = View.GONE
+//                        offlineMapWidgetContainer?.visibility = View.VISIBLE
+//
+//                        mapviewInterface =
+//                            v.findViewById<View>(R.id.embedded_map_view_offline) as BeansMapInterface
+//                        MainScope().launch {
+//                            EventBus.getDefault().post(ResetStopViews())
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         backButton = v.findViewById(R.id.nav_back)
         backButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {

@@ -60,13 +60,13 @@ class BeansStopPnlActionsImpl : RelativeLayout {
                 infoButton?.visibility = View.GONE
                 navigateButton?.visibility = View.VISIBLE
                 btnDeliveredImpl?.visibility = View.VISIBLE
-                btnAttemptedImpl?.visibility = View.VISIBLE
+                btnAttemptedImpl?.visibility = View.GONE
             } else {
                 //Single family stop
                 infoButton?.visibility = View.VISIBLE
                 navigateButton?.visibility = View.VISIBLE
                 btnDeliveredImpl?.visibility = View.VISIBLE
-                btnAttemptedImpl?.visibility = View.VISIBLE
+                btnAttemptedImpl?.visibility = View.GONE
             }
         }
 

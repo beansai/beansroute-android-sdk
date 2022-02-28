@@ -38,7 +38,6 @@ class BeansStopPnlPackageInfoImpl : RelativeLayout {
         val v = LayoutInflater.from(context).inflate(R.layout.beans_stop_pnl_status, this, true) as RelativeLayout
         label1 = v.findViewById(R.id.label1)
         data1 = v.findViewById(R.id.data1)
-        label2 = v.findViewById(R.id.label2)
         data2 = v.findViewById(R.id.data2)
         pickupTime = v.findViewById(R.id.pickupWindow)
         placement = v.findViewById(R.id.placement)
@@ -56,13 +55,12 @@ class BeansStopPnlPackageInfoImpl : RelativeLayout {
                 pickupContainer?.visibility = View.GONE
                 if (it.has_apartments) {
                     placementContainer?.visibility = GONE
-                    label1?.text = "TOTAL STOPS"
+                    label1?.text = "TOTAL"
                     data1?.text = it.apartment_count.toString()
 
-                    label2?.text = "TOTAL ITEMS"
-                    data2?.text = it.total_package_count?.toString()
+                    data2?.text = "x" + (it.total_package_count ?: 0).toString()
                 } else {
-                    label1?.text = "SID"
+                    label1?.text = "ID"
                     var trackingId = ""
                     if (it.tracking_id != null) {
                         trackingId = it.tracking_id!!
@@ -73,8 +71,7 @@ class BeansStopPnlPackageInfoImpl : RelativeLayout {
                         data1?.text = trackingId.substring(trackingId.length - 6)
                     }
 
-                    label2?.text = "ITEMS"
-                    data2?.text = it.num_packages?.toString()
+                    data2?.text = "x" + (it.num_packages ?: 0).toString()
 
                     if(!it.placement.isNullOrEmpty()) {
                         placementContainer?.visibility = View.VISIBLE

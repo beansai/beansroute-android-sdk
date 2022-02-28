@@ -46,6 +46,7 @@ class BeansStopCardApartmentImpl : ConstraintLayout {
         btnDeliveredImpl = v.findViewById(R.id.deliveredButtonV2)
         btnDeliveredImpl?.isClickable = true
         btnAttemptedImpl = v.findViewById(R.id.attemptedButtonV2)
+        btnAttemptedImpl?.visibility = GONE
 
         btnDeliveredImpl?.setOnClickListener{
             if(actionButtonListener != null) {
