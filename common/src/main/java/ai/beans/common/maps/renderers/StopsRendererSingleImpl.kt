@@ -4,6 +4,7 @@ import ai.beans.common.R
 import ai.beans.common.application.BeansContextContainer
 import ai.beans.common.beanbusstation.BeansBusStation
 import ai.beans.common.custom_markers.CustomMarkerImagesViewModel
+import ai.beans.common.events.PinMoved
 import ai.beans.common.events.ShowDataEntryDialog
 import ai.beans.common.location.LocationHolder
 import ai.beans.common.maps.BeansMapFragmentAddressDetailsImpl
@@ -41,6 +42,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -273,6 +275,8 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
         MainScope().launch(Dispatchers.IO) {
             postNewLocationForPrimaryMarker(hashMap, queryId, listItemId )
         }
+
+        EventBus.getDefault().post(PinMoved(listItemId, newMarkerPos.lat, newMarkerPos.lng, markerInfo.type))
     }
 
     override fun onPanelStateChanged(newState: Int) {

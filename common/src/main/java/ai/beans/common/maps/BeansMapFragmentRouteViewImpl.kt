@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-
 class BeansMapFragmentRouteViewImpl : BeansFragment() {
     var stopsRendererRouteImpl: StopsRendererRouteImpl? = null
     var stopCardPanelImpl: BeansStopPanelImpl? = null
