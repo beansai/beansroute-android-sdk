@@ -42,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:textSize="16sp"
         android:gravity="center_horizontal"
-        android:textColor="@color/StatusTitleGrey"
+        android:textColor="@color/statusTitleGrey"
         android:layout_below="@+id/permissionInfo"
         />
 
@@ -57,7 +57,7 @@
         android:visibility="gone"
         android:textSize="16sp"
         android:gravity="center_horizontal"
-        android:textColor="@color/StatusTitleGrey"
+        android:textColor="@color/statusTitleGrey"
         android:layout_below="@+id/permissionInfo_minor_text"
         />
 

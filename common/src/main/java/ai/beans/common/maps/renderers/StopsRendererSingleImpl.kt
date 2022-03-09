@@ -256,12 +256,12 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
 
             var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
             with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
             }
 
             button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
             with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
             }
         }
     }

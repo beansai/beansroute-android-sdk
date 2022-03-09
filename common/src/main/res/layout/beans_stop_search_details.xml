@@ -45,16 +45,15 @@
                         android:id="@+id/bubble_label_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif"
-                        android:textStyle="normal"
-                        android:textColor="#0a2239"
-                        android:layout_centerInParent="true"
                         android:layout_below="@+id/bubble_icon_1"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif"
                         android:singleLine="true"
                         android:text="2nd"
-                        />
+                        android:textColor="#0a2239"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
 
                 </RelativeLayout>
 

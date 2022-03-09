@@ -6,8 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBackground">
+        android:layout_height="wrap_content">
 
         <View
             android:id="@+id/marker"
@@ -28,7 +27,6 @@
             android:background="@color/aptCardConnectorLineColor"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"/>
-
 
         <ai.beans.common.widgets.stops.BeansStopPnlPackageInfoImpl
             android:id="@+id/package_info_panel"

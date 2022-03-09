@@ -30,6 +30,7 @@
         android:layout_margin="4dp"
         android:background="@drawable/bg_card_action_button_unselected"
         android:text="Prev"
+        android:textColor="@color/colorPrimaryText"
         app:layout_constraintEnd_toStartOf="@+id/nextButton"
         app:layout_constraintStart_toEndOf="@+id/attemptedButton"
         android:visibility="gone"/>
@@ -40,6 +41,7 @@
         android:layout_height="50dp"
         android:layout_margin="4dp"
         android:text="Next"
+        android:textColor="@color/colorPrimaryText"
         android:background="@drawable/bg_card_action_button_unselected"
         app:layout_constraintEnd_toStartOf="@+id/infoButton"
         app:layout_constraintStart_toEndOf="@+id/prevButton"

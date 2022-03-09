@@ -14,7 +14,7 @@
 
         <path
                 android:name="triangle"
-                android:fillColor="@color/colorWhite"
+                android:fillColor="@color/colorBackground"
                 android:pathData="m 0,0 L 15,0 L 7.5,12 z"
                 />
 
