@@ -72,14 +72,14 @@ class BeansStopPnlActionsImpl : RelativeLayout {
 
         currentStop?.let {
             if (it.status == RouteStopStatus.FINISHED) {
-                btnDeliveredImpl?.setSelectedState(true)
-                btnAttemptedImpl?.setSelectedState(false)
+                btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, true, false)
+                btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, true, false)
             } else if (it.status == RouteStopStatus.FAILED) {
-                btnDeliveredImpl?.setSelectedState(false)
-                btnAttemptedImpl?.setSelectedState(true)
+                btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, true)
+                btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, true)
             } else {
-                btnDeliveredImpl?.setSelectedState(false)
-                btnAttemptedImpl?.setSelectedState(false)
+                btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, false)
+                btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, false)
             }
 
             if (it.status == RouteStopStatus.NOLOCATION) {

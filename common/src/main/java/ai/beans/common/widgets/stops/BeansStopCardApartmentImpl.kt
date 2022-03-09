@@ -74,18 +74,18 @@ class BeansStopCardApartmentImpl : ConstraintLayout {
         if(currentStop != null) {
             when(currentStop!!.status) {
                 RouteStopStatus.FINISHED -> {
-                    btnDeliveredImpl?.setSelectedState(true)
-                    btnAttemptedImpl?.setSelectedState(false)
+                    btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, true, false)
+                    btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, true, false)
                 }
 
                 RouteStopStatus.NEW -> {
-                    btnDeliveredImpl?.setSelectedState(false)
-                    btnAttemptedImpl?.setSelectedState(false)
+                    btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, false)
+                    btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, false)
                 }
 
                 RouteStopStatus.FAILED -> {
-                    btnDeliveredImpl?.setSelectedState(false)
-                    btnAttemptedImpl?.setSelectedState(true)
+                    btnDeliveredImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, true)
+                    btnAttemptedImpl?.setSelectedState(btnAttemptedImpl?.visibility == GONE, false, true)
                 }
             }
         }
