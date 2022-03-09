@@ -22,6 +22,6 @@ class GoToNextStop
 class ShowNextStop
 class ShowPrevStop
 
-class PinMoved(val listItemId: String, val lat: Double?, val lng: Double?, val type: MapMarkerType?)
+class PinMoved(val stopId: String, val lat: Double?, val lng: Double?, val type: MapMarkerType?)
 
 class ShowDataEntryDialog(val type: FeedbackNoteType, val note:String? = null)

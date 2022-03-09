@@ -21,10 +21,7 @@ import ai.beans.common.panels.PanelInteractionListener
 import ai.beans.common.pojo.GeoPoint
 import ai.beans.common.pojo.RouteStop
 import ai.beans.common.pojo.RouteStopStatus
-import ai.beans.common.pojo.search.LocationUpdateRequest
-import ai.beans.common.pojo.search.MarkerInfo
-import ai.beans.common.pojo.search.NoteResponse
-import ai.beans.common.pojo.search.SearchResponse
+import ai.beans.common.pojo.search.*
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.utils.MultiStateObserver
 import ai.beans.common.viewmodels.RouteStopsViewModel
@@ -60,6 +57,7 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
     var markersMap = HashMap<String, BeansMarkerInterface>()
     var isDataRendered = false
     var customMarkerImagesViewModel: CustomMarkerImagesViewModel? = null
+    var cachedPinMovement: CachedPinMovement? = null
 
     init {
         routeStopsViewModel = ViewModelProviders.of(parentFragment.activity!!,
@@ -87,6 +85,17 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun unregisterEventBus() {
+        if (cachedPinMovement != null) {
+            EventBus.getDefault().post(
+                PinMoved(
+                    cachedPinMovement!!.listItemId,
+                    cachedPinMovement!!.lat,
+                    cachedPinMovement!!.lng,
+                    cachedPinMovement!!.type
+                )
+            )
+            cachedPinMovement = null
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -276,7 +285,14 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
             postNewLocationForPrimaryMarker(hashMap, queryId, listItemId )
         }
 
-        EventBus.getDefault().post(PinMoved(listItemId, newMarkerPos.lat, newMarkerPos.lng, markerInfo.type))
+        if (markerInfo.type == MapMarkerType.PARKING || markerInfo.type == MapMarkerType.UNIT) {
+            cachedPinMovement = CachedPinMovement(
+                listItemId,
+                newMarkerPos.lat,
+                newMarkerPos.lng,
+                markerInfo.type
+            )
+        }
     }
 
     override fun onPanelStateChanged(newState: Int) {

@@ -2,6 +2,7 @@ package ai.beans.tester.ui
 
 import ai.beans.common.MapMoved
 import ai.beans.common.application.BeansContextContainer
+import ai.beans.common.events.PinMoved
 import ai.beans.common.events.UpdateStopStatus
 import ai.beans.common.networking.ApiResponse
 import ai.beans.common.networking.Envelope
@@ -308,5 +309,10 @@ class TestFragment : BeansFragment() {
         }
         routeDataViewModel?.setStops(stops)
         routeDataViewModel?.hasNewRoutesData?.value = true
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: PinMoved) {
+        print(event.stopId)
     }
 }

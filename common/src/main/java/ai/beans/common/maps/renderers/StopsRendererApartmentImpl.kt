@@ -67,6 +67,7 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
     var parentStop : RouteStop ?= null
     var polygonArray = ArrayList<Polygon>()
     var customMarkerImagesViewModel: CustomMarkerImagesViewModel? = null
+    var cachedPinMovement: CachedPinMovement? = null
 
     init {
         routeStopsViewModel = ViewModelProviders.of(parentFragment.activity!!,
@@ -93,6 +94,17 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun unregisterEventBus() {
+        if (cachedPinMovement != null) {
+            EventBus.getDefault().post(
+                PinMoved(
+                    cachedPinMovement!!.listItemId,
+                    cachedPinMovement!!.lat,
+                    cachedPinMovement!!.lng,
+                    cachedPinMovement!!.type
+                )
+            )
+            cachedPinMovement = null
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -382,7 +394,6 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
         showPreviousMarker()
     }
 
-
     override fun onMapMarkerClicked(marker: BeansMarkerInterface) {
         handleMarkerClick(marker)
     }
@@ -461,7 +472,14 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
             postNewLocationForPrimaryMarker(hashMap, queryId, listItemId )
         }
 
-        EventBus.getDefault().post(PinMoved(listItemId, newMarkerPos.lat, newMarkerPos.lng, markerInfo.type))
+        if (markerInfo.type == MapMarkerType.PARKING || markerInfo.type == MapMarkerType.UNIT) {
+            cachedPinMovement = CachedPinMovement(
+                listItemId,
+                newMarkerPos.lat,
+                newMarkerPos.lng,
+                markerInfo.type
+            )
+        }
     }
 
     override fun onMapClicked(location: LatLng) {
