@@ -114,7 +114,7 @@ fun getStatusColor(status: RouteStopStatus?) : Int {
         }
 
         RouteStopStatus.NOLOCATION -> {
-            return Color.RED
+            return Color.DKGRAY
         }
 
         RouteStopStatus.MISLOAD -> {

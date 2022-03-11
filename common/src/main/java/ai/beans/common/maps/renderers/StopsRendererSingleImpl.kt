@@ -178,9 +178,25 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
                 if (response != null && response!!.success) {
                     stopBeansMarkerInfo = response.data
                     var notesResponse = getAddressNotes(response.data!!.query_id!!)
-                    if(notesResponse != null && notesResponse!!.success) {
+                    if (notesResponse != null && notesResponse!!.success) {
                         stopNotesInfo = notesResponse.data
                     }
+                } else {
+                    var x = SearchResponse()
+                    var y = Route()
+                    x.routes = ArrayList<Route>()
+                    y.route_ui_data = RouteUiData()
+                    y.route_ui_data?.markers = ArrayList<MarkerInfo>()
+                    y.route_ui_data?.navigate_to = stop.position
+                    var z = MarkerInfo()
+                    z.location = stop.position
+                    z.type = MapMarkerType.UNIT
+                    z.status = "AVAILABLE"
+                    z.route_point_type = MapMarkerType.UNIT
+                    z.text = ""
+                    y.route_ui_data?.markers?.add(z)
+                    x.routes?.add(y)
+                    stopBeansMarkerInfo = x
                 }
             }
             fetchRoute.await()
@@ -226,47 +242,44 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
     }
 
     override fun onMarkerDragEnd(marker: BeansMarkerInterface?) {
-        //We allow dragging only if we have a valid query id (from the search api response)
-        if(stopBeansMarkerInfo?.query_id != null ) {
-            //Confirm that user wants to move to this location...
-            val builder = AlertDialog.Builder(parentFragment.context)
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
-                //User cancelled the drag!
-                var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
-                var oldPosition = GeoPoint(markerInfo.location!!.lat!!, markerInfo.location!!.lng!!)
-                marker.setLocation(oldPosition)
-            })
+        //Confirm that user wants to move to this location...
+        val builder = AlertDialog.Builder(parentFragment.context)
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+            //User cancelled the drag!
+            var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
+            var oldPosition = GeoPoint(markerInfo.location!!.lat!!, markerInfo.location!!.lng!!)
+            marker.setLocation(oldPosition)
+        })
 
-            builder.setOnCancelListener {
-                //User tapped outside to dismiss the alert....same as a cancel
-                var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
-                var oldPosition = GeoPoint(markerInfo.location!!.lat!!, markerInfo.location!!.lng!!)
-                marker.setLocation(oldPosition)
-            }
+        builder.setOnCancelListener {
+            //User tapped outside to dismiss the alert....same as a cancel
+            var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
+            var oldPosition = GeoPoint(markerInfo.location!!.lat!!, markerInfo.location!!.lng!!)
+            marker.setLocation(oldPosition)
+        }
 
-            builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
-                //Save the new position
-                saveNewMarkerLocation(marker, stopBeansMarkerInfo?.query_id!!, routeStop!!.list_item_id!!)
-            })
+        builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+            //Save the new position
+            saveNewMarkerLocation(marker, stopBeansMarkerInfo?.query_id, routeStop!!.list_item_id!!)
+        })
 
-            builder.setTitle("Save New Location")
-            builder.setMessage("Are you sure you want to move this marker to a new location?")
-            var dlg = builder.create()
-            dlg.show()
+        builder.setTitle("Save New Location")
+        builder.setMessage("Are you sure you want to move this marker to a new location?")
+        var dlg = builder.create()
+        dlg.show()
 
-            var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
-            with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
-            }
+        var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
+        with(button) {
+            setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
+        }
 
-            button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
-            with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
-            }
+        button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
+        with(button) {
+            setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
         }
     }
 
-    private fun saveNewMarkerLocation(marker: BeansMarkerInterface?, queryId: String, listItemId: String) {
+    private fun saveNewMarkerLocation(marker: BeansMarkerInterface?, queryId: String?, listItemId: String) {
         var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
         var newLocation = LocationUpdateRequest()
         newLocation.type = markerInfo.type
@@ -281,8 +294,10 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
         hashMap.put("items", newLocationsArray)
 
         //fire and forget
-        MainScope().launch(Dispatchers.IO) {
-            postNewLocationForPrimaryMarker(hashMap, queryId, listItemId )
+        if (queryId != null) {
+            MainScope().launch(Dispatchers.IO) {
+                postNewLocationForPrimaryMarker(hashMap, queryId, listItemId)
+            }
         }
 
         if (markerInfo.type == MapMarkerType.PARKING || markerInfo.type == MapMarkerType.UNIT) {

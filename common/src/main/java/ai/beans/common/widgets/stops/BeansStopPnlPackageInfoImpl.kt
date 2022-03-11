@@ -16,13 +16,8 @@ import java.util.*
 
 class BeansStopPnlPackageInfoImpl : RelativeLayout {
 
-    var label1 : TextView ?= null
-    var label2 : TextView ?= null
     var data1 : TextView ?= null
-    var data2 : TextView ?= null
-    var placement : TextView ?= null
     var pickupTime : TextView ?= null
-    var placementContainer : LinearLayout ?= null
 
     var dropOffContainer : RelativeLayout ?= null
     var pickupContainer : RelativeLayout ?= null
@@ -36,12 +31,8 @@ class BeansStopPnlPackageInfoImpl : RelativeLayout {
 
     init {
         val v = LayoutInflater.from(context).inflate(R.layout.beans_stop_pnl_status, this, true) as RelativeLayout
-        label1 = v.findViewById(R.id.label1)
         data1 = v.findViewById(R.id.data1)
-        data2 = v.findViewById(R.id.data2)
         pickupTime = v.findViewById(R.id.pickupWindow)
-        placement = v.findViewById(R.id.placement)
-        placementContainer = v.findViewById(R.id.placementContainer)
 
         dropOffContainer = v.findViewById(R.id.deliveryContainer)
         pickupContainer = v.findViewById(R.id.pickupContainer)
@@ -54,31 +45,9 @@ class BeansStopPnlPackageInfoImpl : RelativeLayout {
                 dropOffContainer?.visibility = View.VISIBLE
                 pickupContainer?.visibility = View.GONE
                 if (it.has_apartments) {
-                    placementContainer?.visibility = GONE
-                    label1?.text = "TOTAL"
-                    data1?.text = it.apartment_count.toString()
-
-                    data2?.text = "x" + (it.total_package_count ?: 0).toString()
+                    data1?.text = (it.apartment_count ?: 0).toString() + " x " + (it.total_package_count ?: 0).toString()
                 } else {
-                    label1?.text = "ID"
-                    var trackingId = ""
-                    if (it.tracking_id != null) {
-                        trackingId = it.tracking_id!!
-                    }
-                    if (trackingId.length <= 6) {
-                        data1?.text = trackingId
-                    } else {
-                        data1?.text = trackingId.substring(trackingId.length - 6)
-                    }
-
-                    data2?.text = "x" + (it.num_packages ?: 0).toString()
-
-                    if(!it.placement.isNullOrEmpty()) {
-                        placementContainer?.visibility = View.VISIBLE
-                        placement?.text = it.placement
-                    } else {
-                        placementContainer?.visibility = View.GONE
-                    }
+                    data1?.text = (it.tracking_id ?: "") + " x " + (it.num_packages ?: 0).toString()
                 }
             } else if(it.type == RouteStopType.PICKUP ) {
                 dropOffContainer?.visibility = View.GONE

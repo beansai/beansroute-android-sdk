@@ -83,7 +83,7 @@ class BeansStopPnlActionsImpl : RelativeLayout {
             }
 
             if (it.status == RouteStopStatus.NOLOCATION) {
-                infoButton?.visibility = View.GONE
+                // infoButton?.visibility = View.GONE
                 navigateButton?.visibility = View.GONE
             }
         }

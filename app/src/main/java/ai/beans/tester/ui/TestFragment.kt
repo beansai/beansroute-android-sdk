@@ -47,9 +47,9 @@ class TestFragment : BeansFragment() {
             "id5",
             "",
             "",
-            "1200 Dale Ave, Mountain View, CA",
-            "43",
-            "1200 Dale Ave, Mountain View, CA",
+            "hsdhsdhdsh, gdrgrhgr, hdfhdfhd",
+            "",
+            "hsdhsdhdsh, gdrgrhgr, hdfhdfhd",
             RouteStopStatus.NEW,
             0L,
             0L,
@@ -65,8 +65,8 @@ class TestFragment : BeansFragment() {
             0,
             0,
             0,
-            null,
-            null,
+            GeoPoint(37.44167986538417, -122.16260724897032),
+            GeoPoint(37.44167986538417, -122.16260724897032),
             null,
             "0005",
             "Notes for test5",
@@ -144,7 +144,7 @@ class TestFragment : BeansFragment() {
             "id2",
             "",
             "2255 Showers Dr, Mountain View, CA",
-            "",
+            "25",
             "2255 Showers Dr, Mountain View, CA",
             RouteStopStatus.NEW,
             0L,
@@ -211,6 +211,7 @@ class TestFragment : BeansFragment() {
                     if (response != null && response.code() == 200) {
                         it.display_position = response.body()!!.data!!.getNavigationPoint()
                         it.position = response.body()!!.data!!.getNavigationPoint()
+                        it.status = RouteStopStatus.NEW
                     } else {
                         var managedResponse = ApiResponse.handleResponse(response, response.body())
                         it.status = RouteStopStatus.NOLOCATION
@@ -223,7 +224,7 @@ class TestFragment : BeansFragment() {
 
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
-                if (it.parent_list_item_id == null || it.parent_list_item_id == "") {
+                if (it.address != "" && (it.parent_list_item_id == null || it.parent_list_item_id == "")) {
                     parentStops.add(it)
                 }
             }
@@ -237,7 +238,7 @@ class TestFragment : BeansFragment() {
                 }
             }
             stops.forEach {
-                if (it.parent_list_item_id != null && it.parent_list_item_id != "") {
+                if (it.address == "" || (it.parent_list_item_id != null && it.parent_list_item_id != "")) {
                     orderedStops.add(it)
                 }
             }

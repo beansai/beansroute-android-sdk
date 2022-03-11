@@ -205,6 +205,21 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
                                     beansNotesForStopMap[childStop.list_item_id!!] =
                                         notesResponse.data
                                 }
+                            } else {
+                                var x = SearchResponse()
+                                var y = Route()
+                                x.routes = ArrayList<Route>()
+                                y.route_ui_data = RouteUiData()
+                                y.route_ui_data?.markers = ArrayList<MarkerInfo>()
+                                var z = MarkerInfo()
+                                z.location = childStop.position
+                                z.type = MapMarkerType.UNIT
+                                z.status = "AVAILABLE"
+                                z.route_point_type = MapMarkerType.UNIT
+                                z.text = ""
+                                y.route_ui_data?.markers?.add(z)
+                                x.routes?.add(y)
+                                beansInfoForStopMap[childStop.list_item_id!!] = x
                             }
                         }
                         fetchRoute.await()
@@ -405,56 +420,49 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
             var markerInfo = markerTag["markerInfo"] as MarkerInfo?
 
             var queryId = beansInfoForStopMap[stop!!.list_item_id]?.query_id
-            if (queryId != null) {
-                //Confirm that user wants to move to this location...
-                val builder = AlertDialog.Builder(parentFragment.context)
-                builder.setNegativeButton(
-                    "Cancel",
-                    DialogInterface.OnClickListener { dialog, which ->
-                        //User cancelled the drag!
-                        var oldPosition =
-                            GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
-                        marker.setLocation(oldPosition)
-                    })
-
-                builder.setOnCancelListener {
-                    //User tapped outside to dismiss the alert....same as a cancel
+            //Confirm that user wants to move to this location...
+            val builder = AlertDialog.Builder(parentFragment.context)
+            builder.setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, which ->
+                    //User cancelled the drag!
                     var oldPosition =
                         GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
                     marker.setLocation(oldPosition)
-                }
+                })
 
-                builder.setPositiveButton(
-                    "Save",
-                    DialogInterface.OnClickListener { dialog, which ->
-                        //Save the new position
-                        saveNewMarkerLocation(marker, markerInfo!!, queryId, stop.list_item_id)
-                    })
-
-                builder.setTitle("Save New Location")
-                builder.setMessage("Are you sure you want to move this marker to a new location?")
-                var dlg = builder.create()
-                dlg.show()
-
-                var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
-                with(button) {
-                    setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
-                }
-
-                button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
-                with(button) {
-                    setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
-                }
-            } else {
-                //Rest the icon to old position
+            builder.setOnCancelListener {
+                //User tapped outside to dismiss the alert....same as a cancel
                 var oldPosition =
                     GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
                 marker.setLocation(oldPosition)
             }
+
+            builder.setPositiveButton(
+                "Save",
+                DialogInterface.OnClickListener { dialog, which ->
+                    //Save the new position
+                    saveNewMarkerLocation(marker, markerInfo!!, queryId, stop.list_item_id)
+                })
+
+            builder.setTitle("Save New Location")
+            builder.setMessage("Are you sure you want to move this marker to a new location?")
+            var dlg = builder.create()
+            dlg.show()
+
+            var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
+            with(button) {
+                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+            }
+
+            button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
+            with(button) {
+                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+            }
         }
     }
 
-    private fun saveNewMarkerLocation(marker: BeansMarkerInterface, markerInfo: MarkerInfo, queryId: String, listItemId : String) {
+    private fun saveNewMarkerLocation(marker: BeansMarkerInterface, markerInfo: MarkerInfo, queryId: String?, listItemId : String) {
         var newLocation = LocationUpdateRequest()
         newLocation.type = markerInfo.type
         var newMarkerPos = marker.getLocation()
@@ -468,8 +476,10 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
         hashMap.put("items", newLocationsArray)
 
         //fire and forget
-        MainScope().launch(Dispatchers.IO) {
-            postNewLocationForPrimaryMarker(hashMap, queryId, listItemId )
+        if (queryId != null) {
+            MainScope().launch(Dispatchers.IO) {
+                postNewLocationForPrimaryMarker(hashMap, queryId, listItemId)
+            }
         }
 
         if (markerInfo.type == MapMarkerType.PARKING || markerInfo.type == MapMarkerType.UNIT) {

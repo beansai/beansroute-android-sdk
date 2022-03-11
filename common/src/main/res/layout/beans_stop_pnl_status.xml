@@ -11,77 +11,40 @@
         android:visibility="visible">
 
         <TextView
-            android:id="@+id/label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="10dp"
-            android:letterSpacing="0.04"
-            android:fontFamily="sans-serif-condensed"
-            android:text="ID"
-            android:textColor="@color/packageInfoLabel"
-            android:textSize="14sp" />
-
-        <TextView
             android:id="@+id/data1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/label1"
-            android:layout_marginLeft="18dp"
-            android:text="2043"
+            android:text=""
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/colorPrimaryText"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/data2"
-            android:layout_below="@+id/data1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryText"
-            android:layout_marginLeft="18dp"
-            android:layout_marginBottom="10dp"
-            android:text="x4"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/data2"
-            android:id="@+id/placementContainer"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/placement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/colorPrimaryText"
-                android:layout_marginLeft="18dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:text="FLOOR"
-                />
-        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pickupContainer"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/pickupLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/colorPrimaryText"
-            android:layout_marginLeft="18dp"
-            android:text="PU" />
+            android:textStyle="bold"
+            android:text="" />
 
         <TextView
             android:id="@+id/pickupWindow"
@@ -92,8 +55,9 @@
             android:fontFamily="sans-serif-condensed"
             android:textColor="@color/colorPrimaryText"
             android:layout_marginLeft="18dp"
-            android:text="11PM - 12 PM"
+            android:text=""
             />
+        </LinearLayout>
     </RelativeLayout>
 
 

@@ -10,6 +10,7 @@
         android:id="@+id/pickup_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone">
@@ -43,22 +44,9 @@
         android:id="@+id/sid_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/sid_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:fontFamily="sans-serif-condensed"
-            android:letterSpacing="0.04"
-            android:text="ID"
-            android:textColor="@color/packageInfoLabel"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/sid"
@@ -68,41 +56,26 @@
             android:textSize="21sp"
             android:text="1024"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@+id/sid_label"
-            app:layout_constraintTop_toBottomOf="@+id/sid_label" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/items_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/sid_container"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/count_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:letterSpacing="0.04"
-            android:text=""
-            android:textColor="#b2b2b2"
-            android:textSize="10sp"
-            android:layout_marginTop="13dp"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sid_container">
         <TextView
             android:id="@+id/package_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/count_label"
             android:textColor="@color/colorPrimaryText"
             android:textSize="20sp"
             android:text="x4"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@+id/count_label"
-            app:layout_constraintTop_toBottomOf="@+id/count_label" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
