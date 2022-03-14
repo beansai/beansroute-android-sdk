@@ -11,6 +11,7 @@ import ai.beans.common.networking.isp.optimizeStopList
 import ai.beans.common.pojo.*
 import ai.beans.common.pojo.search.SearchResponse
 import ai.beans.common.ui.core.BeansFragment
+import ai.beans.common.utils.groupStops
 import ai.beans.common.viewmodels.RouteStopsViewModel
 import ai.beans.tester.R
 import ai.beans.tester.TestApplication
@@ -27,6 +28,9 @@ import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class TestFragment : BeansFragment() {
     var routeDataViewModel: RouteStopsViewModel? = null
@@ -107,7 +111,7 @@ class TestFragment : BeansFragment() {
             0,
             0
         ))
-        stops.add(RouteStop(
+        /*stops.add(RouteStop(
             "id2",
             "",
             "",
@@ -135,16 +139,16 @@ class TestFragment : BeansFragment() {
             "0002",
             "Notes for test2",
             null,
-            true,
-            2,
+            false,
+            0,
             0
-        ))
+        ))*/
         stops.add(RouteStop(
             "id3",
-            "id2",
+            "",
             "",
             "2255 Showers Dr, Mountain View, CA",
-            "25",
+            "352",
             "2255 Showers Dr, Mountain View, CA",
             RouteStopStatus.NEW,
             0L,
@@ -173,10 +177,10 @@ class TestFragment : BeansFragment() {
         ))
         stops.add(RouteStop(
             "id4",
-            "id2",
+            "",
             "",
             "2255 Showers Dr, Mountain View, CA",
-            "",
+            "252",
             "2255 Showers Dr, Mountain View, CA",
             RouteStopStatus.NEW,
             0L,
@@ -221,6 +225,8 @@ class TestFragment : BeansFragment() {
                     it.status = RouteStopStatus.NOLOCATION
                 }
             }
+
+            stops = groupStops(stops)
 
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
