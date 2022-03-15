@@ -10,6 +10,7 @@ import kotlin.collections.ArrayList
 fun groupStops(stops: ArrayList<RouteStop>) : ArrayList<RouteStop> {
     var parentByLatLng = HashMap<String, RouteStop>()
     var stopsByLatLng = HashMap<String, ArrayList<RouteStop>>()
+    var bestIxPosition = HashMap<String, Number>()
 
     var groupedStops = ArrayList<RouteStop>()
     stops.forEach {
@@ -22,6 +23,10 @@ fun groupStops(stops: ArrayList<RouteStop>) : ArrayList<RouteStop> {
                 stopsByLatLng.put(it.position.toString(), ArrayList<RouteStop>())
             }
             stopsByLatLng.get(it.position.toString())?.add(it)
+
+            if (!bestIxPosition.containsKey(it.position.toString())) {
+                bestIxPosition.put(it.position.toString(), groupedStops.size - 1)
+            }
         }
         // Now make a list of existing parents
         if (it.has_apartments) {
@@ -30,51 +35,55 @@ fun groupStops(stops: ArrayList<RouteStop>) : ArrayList<RouteStop> {
     }
 
     stopsByLatLng.entries.forEach {
-        if (it.value.size > 1) {
-            var parentStop = RouteStop(
-                UUID.randomUUID().toString(),
-                "",
-                "",
-                it.value.get(0).address,
-                "",
-                it.value.get(0).formatted_address,
-                RouteStopStatus.NEW,
-                0L,
-                0L,
-                0L,
-                0L,
-                "",
-                0L,
-                "",
-                RouteStopType.DROPOFF,
-                "",
-                "",
-                "",
-                0,
-                0,
-                0,
-                it.value.get(0).position,
-                it.value.get(0).position,
-                it.value.get(0).address_components,
-                "",
-                "",
-                null,
-                true,
-                0,
-                0
-            )
-            parentByLatLng.put(it.value.get(0).position.toString(), parentStop)
-            groupedStops.add(parentStop)
-        }
-
-        if (parentByLatLng.containsKey(it.value.get(0).position.toString())) {
-            // Needs to be grouped
-            var parentStop = parentByLatLng.get(it.value.get(0).position.toString())!!
+        if (it.value.size > 1 || parentByLatLng.containsKey(it.value.get(0).position.toString())) {
             for (routeStop in it.value) {
+                if (!parentByLatLng.containsKey(routeStop.position.toString())) {
+                    var parentStop = RouteStop(
+                        UUID.randomUUID().toString(),
+                        "",
+                        "",
+                        routeStop.address,
+                        "",
+                        routeStop.formatted_address,
+                        RouteStopStatus.NEW,
+                        0L,
+                        0L,
+                        0L,
+                        0L,
+                        "",
+                        0L,
+                        "",
+                        RouteStopType.DROPOFF,
+                        "",
+                        "",
+                        "",
+                        0,
+                        0,
+                        0,
+                        routeStop.position,
+                        routeStop.position,
+                        routeStop.address_components,
+                        "",
+                        "",
+                        null,
+                        true,
+                        0,
+                        0
+                    )
+                    parentByLatLng.put(routeStop.position.toString(), parentStop)
+                    groupedStops.add(
+                        (bestIxPosition.get(routeStop.position.toString()) ?: 0).toInt(), parentStop
+                    )
+                }
+
+                // Needs to be grouped
+                var parentStop = parentByLatLng.get(routeStop.position.toString())!!
                 routeStop.parent_list_item_id = parentStop.list_item_id
                 parentStop.apartment_count = (parentStop.apartment_count ?: 0) + 1
-                parentStop.num_packages = (parentStop.num_packages ?: 0) + (routeStop.num_packages ?: 0)
-                parentStop.total_package_count = (parentStop.total_package_count ?: 0) + (routeStop.num_packages ?: 0)
+                parentStop.num_packages =
+                    (parentStop.num_packages ?: 0) + (routeStop.num_packages ?: 0)
+                parentStop.total_package_count =
+                    (parentStop.total_package_count ?: 0) + (routeStop.num_packages ?: 0)
             }
         }
     }

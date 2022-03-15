@@ -52,11 +52,7 @@ class BeansStopCardPnlPackageInfoApartmentImpl : RelativeLayout {
                 dropOffSIDContainer?.visibility = View.VISIBLE
                 pickupContainer?.visibility = View.GONE
                 if (it.tracking_id != null) {
-                    if (it.tracking_id!!.length <= 6) {
-                        sid?.text = it.tracking_id
-                    } else {
-                        sid?.text = it.tracking_id!!.substring(it.tracking_id!!.length - 6)
-                    }
+                    sid?.text = it.tracking_id
                 } else {
                     sid?.text = ""
                 }

@@ -257,17 +257,21 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
         allStops.clear()
         allStopsHashMap.clear()
 
+        var currentIx = 1
         for (task in allStopsIncludingChildren.withIndex()) {
             if (task.value.parent_list_item_id != null && task.value.parent_list_item_id != "") {
                 continue
             }
+            Log.d("PRINT", (if (task.value.has_apartments) (task.value.apartment_count ?: 1) else 1).toString())
 
             if (!(task.value.type == RouteStopType.WAREHOUSE_PICKUP || task.value.type == RouteStopType.WAREHOUSE_DROPOFF)) {
-                task.value.route_display_number = task.index + 1
+                task.value.route_display_number = currentIx
                 allStops.add(task.value)
                 allStopsHashMap.put(task.value.list_item_id!!, task.value)
                 optimizedRouteStopMap.put(task.value.list_item_id!!, task.index)
+                currentIx = currentIx + (if (task.value.has_apartments) (task.value.apartment_count ?: 1) else 1)
             }
+
 
             if (task.value.has_apartments) {
                 var childList = getAllChildStops(task.value.list_item_id!!)

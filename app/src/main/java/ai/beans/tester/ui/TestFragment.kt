@@ -227,6 +227,7 @@ class TestFragment : BeansFragment() {
             }
 
             stops = groupStops(stops)
+            // stops = groupStops(stops)
 
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
