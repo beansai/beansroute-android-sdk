@@ -243,10 +243,10 @@ class TestFragment : BeansFragment() {
                         orderedStops.add(it)
                     }
                 }
-            }
-            stops.forEach {
-                if (it.address == "" || (it.parent_list_item_id != null && it.parent_list_item_id != "")) {
-                    orderedStops.add(it)
+                stops.forEach {
+                    if (it.parent_list_item_id != null && it.parent_list_item_id != "" && it.parent_list_item_id == routeStop.list_item_id) {
+                        orderedStops.add(it)
+                    }
                 }
             }
 
