@@ -51,9 +51,9 @@ class TestFragment : BeansFragment() {
             "id5",
             "",
             "",
-            "hsdhsdhdsh, gdrgrhgr, hdfhdfhd",
+            "248 Homer Ave, Palo Alto, CA",
             "",
-            "hsdhsdhdsh, gdrgrhgr, hdfhdfhd",
+            "248 Homer Ave, Palo Alto, CA",
             RouteStopStatus.NEW,
             0L,
             0L,
@@ -68,7 +68,7 @@ class TestFragment : BeansFragment() {
             "",
             0,
             0,
-            0,
+            1,
             GeoPoint(37.44167986538417, -122.16260724897032),
             GeoPoint(37.44167986538417, -122.16260724897032),
             null,
@@ -100,7 +100,7 @@ class TestFragment : BeansFragment() {
             "",
             0,
             0,
-            0,
+            1,
             null,
             null,
             null,
@@ -215,7 +215,20 @@ class TestFragment : BeansFragment() {
                     if (response != null && response.code() == 200) {
                         it.display_position = response.body()!!.data!!.getNavigationPoint()
                         it.position = response.body()!!.data!!.getNavigationPoint()
-                        it.status = RouteStopStatus.NEW
+                        if (response.body()!!.data!!.routes != null
+                            && response.body()!!.data!!.routes!!.size > 0
+                            && response.body()!!.data!!.routes!!.get(0).destination?.country_iso3 != "MYS") {
+                            it.status = RouteStopStatus.NOLOCATION
+                            // Optional:
+                            // it.display_position = null
+                            // it.position = null
+                        } else {
+                            if (it.display_position == null || it.position == null) {
+                                it.status = RouteStopStatus.NOLOCATION
+                            } else {
+                                it.status = RouteStopStatus.NEW
+                            }
+                        }
                     } else {
                         var managedResponse = ApiResponse.handleResponse(response, response.body())
                         it.status = RouteStopStatus.NOLOCATION

@@ -414,36 +414,99 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
     }
 
     override fun onMarkerDragEnd(marker: BeansMarkerInterface?) {
-        MainScope().launch {
-            var markerTag = getDataFromTag(marker!!.getMarkerTag()!!, rendererId) as HashMap<String, Any>
-            var stop = markerTag["stop"] as RouteStop?
-            var markerInfo = markerTag["markerInfo"] as MarkerInfo?
+        var markerTag = getDataFromTag(marker!!.getMarkerTag()!!, rendererId) as HashMap<String, Any>
+        var stop = markerTag["stop"] as RouteStop?
+        var markerInfo = markerTag["markerInfo"] as MarkerInfo?
 
-            var queryId = beansInfoForStopMap[stop!!.list_item_id]?.query_id
-            //Confirm that user wants to move to this location...
-            val builder = AlertDialog.Builder(parentFragment.context)
-            builder.setNegativeButton(
-                "Cancel",
-                DialogInterface.OnClickListener { dialog, which ->
-                    //User cancelled the drag!
-                    var oldPosition =
-                        GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
-                    marker.setLocation(oldPosition)
-                })
+        var queryId = beansInfoForStopMap[stop!!.list_item_id]?.query_id
 
-            builder.setOnCancelListener {
-                //User tapped outside to dismiss the alert....same as a cancel
+        //Confirm that user wants to move to this location...
+        val builder = AlertDialog.Builder(parentFragment.context)
+        builder.setNegativeButton(
+            "Cancel",
+            DialogInterface.OnClickListener { dialog, which ->
+                //User cancelled the drag!
                 var oldPosition =
                     GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
                 marker.setLocation(oldPosition)
+            })
+
+        builder.setOnCancelListener {
+            //User tapped outside to dismiss the alert....same as a cancel
+            var oldPosition =
+                GeoPoint(markerInfo!!.location!!.lat!!, markerInfo.location!!.lng!!)
+            marker.setLocation(oldPosition)
+        }
+
+        builder.setPositiveButton(
+            "Save",
+            DialogInterface.OnClickListener { dialog, which ->
+                //Save the new position
+                saveNewMarkerLocation(marker, markerInfo!!, queryId, stop.list_item_id)
+            })
+
+        builder.setTitle("Save New Location")
+        builder.setMessage("Are you sure you want to move this marker to a new location?")
+        var dlg = builder.create()
+        dlg.show()
+
+        var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
+        with(button) {
+            setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+        }
+
+        button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
+        with(button) {
+            setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+        }
+    }
+
+    fun onMarkerJumpEnd() {
+        if (currentStop == null) {
+            val builder = AlertDialog.Builder(parentFragment.context)
+            builder.setNegativeButton("OK", DialogInterface.OnClickListener { dialog, which ->
+
+            })
+
+            builder.setTitle("Error")
+            builder.setMessage("You must select a child stop to change position")
+            var dlg = builder.create()
+            dlg.show()
+
+            var button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
+            with(button) {
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
+            }
+            return
+        }
+        var currLocation = locationHolder?.currentLocation
+        if (currLocation != null) {
+            var center = GeoPoint()
+            center.lat = currLocation?.latitude
+            center.lng = currLocation?.longitude
+
+            var marker = unitMarkersList[currentSelectedMarkerIndex]
+            var markerTag = getDataFromTag(marker!!.getMarkerTag()!!, rendererId) as HashMap<String, Any>
+            var stop = markerTag["stop"] as RouteStop?
+            var markerInfo = markerTag["markerInfo"] as MarkerInfo?
+            var queryId = beansInfoForStopMap[stop!!.list_item_id]?.query_id
+
+            //Confirm that user wants to move to this location...
+            val builder = AlertDialog.Builder(parentFragment.context)
+            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+                //User cancelled the drag!
+            })
+
+            builder.setOnCancelListener {
+                //User tapped outside to dismiss the alert....same as a cancel
             }
 
-            builder.setPositiveButton(
-                "Save",
-                DialogInterface.OnClickListener { dialog, which ->
-                    //Save the new position
-                    saveNewMarkerLocation(marker, markerInfo!!, queryId, stop.list_item_id)
-                })
+            builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+                //Save the new position
+                marker?.setLocation(center)
+                mapInterface?.setCurrentLocation(currLocation, mapInterface?.getCurrentZoomLevel(), true)
+                saveNewMarkerLocation(marker, markerInfo!!, queryId, stop.list_item_id)
+            })
 
             builder.setTitle("Save New Location")
             builder.setMessage("Are you sure you want to move this marker to a new location?")
@@ -452,12 +515,12 @@ class StopsRendererApartmentImpl(ownerFragment: BeansFragment, savedStateBundle:
 
             var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
             with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
             }
 
             button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
             with(button) {
-                setTextColor(parentFragment.resources.getColor(R.color.colorPrimaryText))
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
             }
         }
     }

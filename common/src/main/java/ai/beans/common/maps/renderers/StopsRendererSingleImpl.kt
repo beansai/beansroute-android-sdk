@@ -279,6 +279,64 @@ class StopsRendererSingleImpl (ownerFragment: BeansFragment, savedStateBundle: B
         }
     }
 
+    fun onMarkerJumpEnd() {
+        var currLocation = locationHolder?.currentLocation
+        if (currLocation != null) {
+            var center = GeoPoint()
+            center.lat = currLocation?.latitude
+            center.lng = currLocation?.longitude
+
+            var marker: BeansMarkerInterface? = null
+
+            for (markerInMap in markersMap.values) {
+                if (marker == null) {
+                    marker = markerInMap
+                }
+                var markerInfo =
+                    getDataFromTag(markerInMap?.getMarkerTag()!!, rendererId) as MarkerInfo
+                if (markerInfo.type == MapMarkerType.UNIT) {
+                    marker = markerInMap
+                }
+            }
+
+            //Confirm that user wants to move to this location...
+            val builder = AlertDialog.Builder(parentFragment.context)
+            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+                //User cancelled the drag!
+            })
+
+            builder.setOnCancelListener {
+                //User tapped outside to dismiss the alert....same as a cancel
+            }
+
+            builder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, which ->
+                //Save the new position
+                marker?.setLocation(center)
+                mapInterface?.setCurrentLocation(currLocation, mapInterface?.getCurrentZoomLevel(), true)
+                saveNewMarkerLocation(
+                    marker,
+                    stopBeansMarkerInfo?.query_id,
+                    routeStop!!.list_item_id!!
+                )
+            })
+
+            builder.setTitle("Save New Location")
+            builder.setMessage("Are you sure you want to move this marker to a new location?")
+            var dlg = builder.create()
+            dlg.show()
+
+            var button = dlg.getButton(DialogInterface.BUTTON_POSITIVE)
+            with(button) {
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
+            }
+
+            button = dlg.getButton(DialogInterface.BUTTON_NEGATIVE)
+            with(button) {
+                setTextColor(parentFragment.resources.getColor(R.color.colorBlack))
+            }
+        }
+    }
+
     private fun saveNewMarkerLocation(marker: BeansMarkerInterface?, queryId: String?, listItemId: String) {
         var markerInfo = getDataFromTag(marker?.getMarkerTag()!!, rendererId) as MarkerInfo
         var newLocation = LocationUpdateRequest()

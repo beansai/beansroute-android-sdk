@@ -6,4 +6,5 @@ class Destination {
     var address : String ?= null
     var unit : String ?= null
     var location : GeoPoint ?= null
+    var country_iso3: String ?= null
 }

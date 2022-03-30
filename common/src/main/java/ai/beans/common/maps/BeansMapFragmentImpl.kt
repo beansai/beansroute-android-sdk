@@ -45,6 +45,7 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
     private var locationHolder: LocationHolder? = null
     private var myLocationButton: RoundMapButton? = null
     private var satelliteButton: RoundMapButton? = null
+    private var movepinButton: RoundMapButton? = null
 //    private var offlineButton: RoundMapButton? = null
     private var backButton: RoundMapButton?  = null
 
@@ -145,6 +146,9 @@ class BeansMapFragmentImpl : BeansFragment(), BeansMapViewListener, BeansMapFrag
                 }
             }
         }
+
+        movepinButton= v.findViewById(R.id.movepin_button)
+        movepinButton?.visibility = View.GONE
 
 //        offlineButton = v.findViewById(R.id.offline_button)
 //        offlineButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {

@@ -30,7 +30,9 @@ class BeansMapFragmentApartmentDetailsImpl : BeansFragment() {
     var unit : String? = null
     var lat : String? = null
     var long : String? = null
-    var mapFragment : BeansMapFragmentImpl? = null
+    var mapFragment: BeansMapFragmentImpl? = null
+    var movepinButton: RoundMapButton? = null
+
     lateinit var containerPanel : BeansStopPanelImpl
     var locationHolder : LocationHolder? = null
     var routeStopId: String? = null
@@ -69,6 +71,14 @@ class BeansMapFragmentApartmentDetailsImpl : BeansFragment() {
         containerPanel = v.findViewById(R.id.containerPanel)
         containerPanel.setOwnerFragment(this)
         containerPanel.setCurrentPanelVisibilityState(BottomSheetBehavior.STATE_HIDDEN)
+
+        movepinButton= v.findViewById(R.id.movepin_button)
+        movepinButton?.visibility = View.VISIBLE
+        movepinButton?.mapButtonlistener = object : RoundMapButton.MapButtonListener {
+            override fun buttonClicked(btnId: Int, state: Boolean) {
+                addressDetailsRendererApartmentImpl?.onMarkerJumpEnd()
+            }
+        }
 
         return v
     }

@@ -110,6 +110,18 @@
                 app:button_down_image="@drawable/mylocation_selected"
                 app:button_up_background="@drawable/bg_map_round_button"
                 app:button_up_image="@drawable/mylocation" />
+
+            <ai.beans.common.maps.RoundMapButton
+                android:id="@+id/movepin_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:elevation="5dp"
+                app:button_down_background="@drawable/bg_map_round_button_selected"
+                app:button_down_image="@drawable/movepin_selected"
+                app:button_up_background="@drawable/bg_map_round_button"
+                app:button_up_image="@drawable/movepin" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
