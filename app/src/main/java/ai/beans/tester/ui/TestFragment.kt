@@ -47,165 +47,152 @@ class TestFragment : BeansFragment() {
             ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)
         ).get(RouteStopsViewModel::class.java)
 
-        stops.add(RouteStop(
-            "id5",
-            "",
-            "",
-            "248 Homer Ave, Palo Alto, CA",
-            "",
-            "248 Homer Ave, Palo Alto, CA",
-            RouteStopStatus.NEW,
-            0L,
-            0L,
-            0L,
-            0L,
-            "",
-            0L,
-            "",
-            RouteStopType.DROPOFF,
-            "F5",
-            "Test5",
-            "",
-            0,
-            0,
-            1,
-            GeoPoint(37.44167986538417, -122.16260724897032),
-            GeoPoint(37.44167986538417, -122.16260724897032),
-            null,
-            "0005",
-            "Notes for test5",
-            null,
-            false,
-            0,
-            0
-        ))
-        stops.add(RouteStop(
+        stops.add(RouteStop.simpleInstance(
             "id1",
-            "",
-            "",
-            "10136 McLaren Pl, Cupertino, CA",
-            "",
-            "10136 McLaren Pl, Cupertino, CA",
-            RouteStopStatus.NEW,
-            0L,
-            0L,
-            0L,
-            0L,
-            "",
-            0L,
+            "Lot 857 i Jl. Lorong masjid 1. Kg. Sg. Kayu Ara Damansara Utama Petaling Jaya,47400,Petaling Jaya,Selangor,MY",
             "",
             RouteStopType.DROPOFF,
-            "F1",
-            "Test1",
-            "",
-            0,
-            0,
-            1,
-            null,
-            null,
-            null,
-            "0001",
-            "Notes for test1",
-            null,
-            false,
-            0,
-            0
+            RouteStopStatus.NEW
         ))
-        /*stops.add(RouteStop(
+        stops.add(RouteStop.simpleInstance(
             "id2",
-            "",
-            "",
-            "2255 Showers Dr, Mountain View, CA",
-            "",
-            "2255 Showers Dr, Mountain View, CA",
-            RouteStopStatus.NEW,
-            0L,
-            0L,
-            0L,
-            0L,
-            "",
-            0L,
+            "Shell Station, 1 Jalan Kenanga PJU6A Vista Damansara (Kg Kayu Ara),47400,Petaling Jaya,Selangor,MY",
             "",
             RouteStopType.DROPOFF,
-            "F2",
-            "Test2",
-            "",
-            0,
-            0,
-            2,
-            null,
-            null,
-            null,
-            "0002",
-            "Notes for test2",
-            null,
-            false,
-            0,
-            0
-        ))*/
-        stops.add(RouteStop(
-            "id3",
-            "",
-            "",
-            "2255 Showers Dr, Mountain View, CA",
-            "352",
-            "2255 Showers Dr, Mountain View, CA",
-            RouteStopStatus.NEW,
-            0L,
-            0L,
-            0L,
-            0L,
-            "",
-            0L,
-            "",
-            RouteStopType.DROPOFF,
-            "F3",
-            "Test3",
-            "",
-            0,
-            0,
-            3,
-            null,
-            null,
-            null,
-            "0003",
-            "Notes for test3",
-            null,
-            false,
-            0,
-            0
+            RouteStopStatus.NEW
         ))
-        stops.add(RouteStop(
-            "id4",
-            "",
-            "",
-            "2255 Showers Dr, Mountain View, CA",
-            "252",
-            "2255 Showers Dr, Mountain View, CA",
-            RouteStopStatus.NEW,
-            0L,
-            0L,
-            0L,
-            0L,
-            "",
-            0L,
+        stops.add(RouteStop.simpleInstance(
+            "id3",
+            "20, Jalan Teratai, PJU 6, 47400 Petaling Jaya, Selangor, Malaysia,47400,Sungai Petani,Selangor,MY",
             "",
             RouteStopType.DROPOFF,
-            "F4",
-            "Test4",
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id4",
+            "18-3A, Glomac Centro,Jln Teratai PJU 6A,47400,Petaling Jaya,Selangor,MY",
             "",
-            0,
-            0,
-            3,
-            null,
-            null,
-            null,
-            "0004",
-            "Notes for test4",
-            null,
-            false,
-            0,
-            0
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id5",
+            "G-16-8, Pangsapuri Pelangi Ara, Pju 6A Jalan Teratai, Petaling Jaya Selangor,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id6",
+            "G11 Sri Araville, Kayu Ara, Jalan Dahlia, PJU 6A, PETALING JAYA Selangor.,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id7",
+            "LEE ZI TIAN B-8-6 PELANGI UTAMA JALAN MASJID PJU 6A 47400 Petaling Jaya Selangor,47400,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id8",
+            "38 ,jalan 3 kampung kayu ara indah, string,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id9",
+            "19-09, Glomac Centro Serviced Apartment, Jalan Teratai PJU 6A,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id10",
+            "1007i, Jalan Kekwa, Kampung kayu Ara,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id11",
+            "G-5-18 PANGSAPURI PELANGI ARA PJU6A JALAN TERATAI KAMPUNG SUNGAI KAYU ARA,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id12",
+            "Glomac Centro, Lorong Masjid 1, Kampung Sungai Kayu Ara 1-19, 47400, Petaling Jaya, Selangor,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id13",
+            "Lot 866 lorong masjid 2 kg sg kayu ara damansara,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id14",
+            "NO32A,JALAN DAHLIA 3,PJU6A,TAMAN MAS UTAMA, 47400, Petaling Jaya, Selangor,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id15",
+            "B9-15, Boulevard Residence, Jalan Kenanga,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id16",
+            "E-10-3A Pelangi Utama, Jalan Masjid PJU 6A, Petaling Jaya,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id17",
+            "GLAMPOT SDN BHD, B-5-26 Block Bougainvillea, 10 Boulevard, Jalan Kenanga, 47400 Kayu Ara,Damansara , Pj, Selangor, Malaysia,47400,Gombak Setia .,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id18",
+            "SITI NORHAYATI MAHMOD LOT 1028-T JALAN CEMPAKA KAMPUNG SUNGAI KAYU ARA DAMANSARA JAYA 47400 Petaling Jaya Selangor,47400,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id19",
+            "10A-LOT1047, Jalan Cempaka Kampung Sungai Kayu Ara Selangor Malaysia ,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id20",
+            "C-5-41   ,   Blok Camilia, 10 Boulevard, SPRINT Expressway, Kampung Sungai Kayu Ara,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id21",
+            "no  10  , d  residency  terrace,  jalan  anggerik,.   kampung sungai   kayu ara 47400 pj selangor,47400,Petaling Jaya,Selangor,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
         ))
 
         MainScope().launch {
@@ -225,7 +212,9 @@ class TestFragment : BeansFragment() {
                         } else {
                             if (it.display_position == null || it.position == null) {
                                 it.status = RouteStopStatus.NOLOCATION
+                                it.route_display_number = 5;
                             } else {
+                                it.route_display_number = 5;
                                 it.status = RouteStopStatus.NEW
                             }
                         }
@@ -244,11 +233,11 @@ class TestFragment : BeansFragment() {
 
             var parentStops = ArrayList<RouteStop>()
             stops.forEach {
-                if (it.address != "" && (it.parent_list_item_id == null || it.parent_list_item_id == "")) {
+                if (it.address != "" && it.position != null && (it.parent_list_item_id == null || it.parent_list_item_id == "")) {
                     parentStops.add(it)
                 }
             }
-            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(37.62708995575689, -122.36044460693604), GeoPoint(37.0, -122.0))
+            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
             var orderedStops = ArrayList<RouteStop>()
             for (routeStop in optimizedParentStops.data!!.item!!) {
                 stops.forEach {

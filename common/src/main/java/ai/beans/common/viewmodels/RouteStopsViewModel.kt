@@ -27,9 +27,6 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
     var allStopsHashMap = LinkedHashMap<String, RouteStop>()
     var pathSegments : RoutePath?= null
 
-    var totalStops =  0
-    var completedStops = 0
-
     private var optimizedRouteStopMap = HashMap<String, Int>()
     private var apartmentMap = HashMap<String, ArrayList<RouteStop>>()
     private var currentActiveStop : RouteStop ?= null
@@ -250,25 +247,31 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     suspend private fun refreshInMemoryStopData() {
-        totalStops = getTotalStopCount()
-        completedStops = getCompletedStopCount()
-
         apartmentMap.clear()
         allStops.clear()
         allStopsHashMap.clear()
 
+        // The assumption here is that the list is ordered, as in every parents is immediately followed
+        // by its children. In practice, that does not seem to be the case. (POS ERROR)
+        // We'll guard against it.
+
         var currentIx = 1
         for (task in allStopsIncludingChildren.withIndex()) {
             if (!(task.value.type == RouteStopType.WAREHOUSE_PICKUP || task.value.type == RouteStopType.WAREHOUSE_DROPOFF)) {
+                // Assuming parents are at the correct place, they get the correct number.
+                // If parents were not the correct place, they would get a strange number. (POS ERROR)
                 task.value.route_display_number = currentIx
                 if (!task.value.has_apartments) {
+                    // If not a parent stop, the stop gets a number.
                     currentIx = currentIx + 1
                 }
             }
 
+            // Do nothing more if this is a child
             if (task.value.parent_list_item_id != null && task.value.parent_list_item_id != "") {
                 continue
             }
+            // Parents and top level items only
             Log.d("PRINT", (if (task.value.has_apartments) (task.value.apartment_count ?: 1) else 1).toString())
 
             if (!(task.value.type == RouteStopType.WAREHOUSE_PICKUP || task.value.type == RouteStopType.WAREHOUSE_DROPOFF)) {
@@ -277,8 +280,8 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
                 optimizedRouteStopMap.put(task.value.list_item_id!!, task.index)
             }
 
-
             if (task.value.has_apartments) {
+                // Parents only
                 var childList = getAllChildStops(task.value.list_item_id!!)
                 var aptList = ArrayList<RouteStop>()
                 for (aptStop in childList) {
@@ -295,8 +298,19 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
                 continue
             }
 
+            // Parents and top level items only
             if (apartmentMap.containsKey(task.value.list_item_id!!)) {
+                // Parents only
                 allStopsHashMap[task.value.list_item_id!!]?.children = apartmentMap.get(task.value.list_item_id!!)
+
+                // Fix for POS ERROR
+                if (apartmentMap.get(task.value.list_item_id!!) != null) {
+                    var min = Int.MAX_VALUE
+                    for (childStop in apartmentMap.get(task.value.list_item_id!!)!!) {
+                        min = Math.min(min, childStop.route_display_number ?: 0)
+                    }
+                    task.value.route_display_number = min
+                }
             }
         }
 
