@@ -49,210 +49,157 @@ class TestFragment : BeansFragment() {
 
         stops.add(RouteStop.simpleInstance(
             "id1",
-            "Lot 857 i Jl. Lorong masjid 1. Kg. Sg. Kayu Ara Damansara Utama Petaling Jaya,47400,Petaling Jaya,Selangor,MY",
+            "56 JALAN 4/48,TAMAN DATO SENU,51000,SENTUL,KUALA LUMPUR,MY",
+            "",
+            RouteStopType.DROPOFF,
+            RouteStopStatus.NEW
+        ))
+        stops.add(RouteStop.simpleInstance(
+            "id101",
+            "56 JALAN 4/48,TAMAN DATO SENU,51000,SENTUL,KUALA LUMPUR,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id2",
-            "Shell Station, 1 Jalan Kenanga PJU6A Vista Damansara (Kg Kayu Ara),47400,Petaling Jaya,Selangor,MY",
+            "NO. 28, JALAN DATO SENU 32/48TAMAN DATO SENU, 5100,0 KUALA LUMPUR, Kuala Lumpur, Malaysia,51000,KOTA BHARU,Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id3",
-            "20, Jalan Teratai, PJU 6, 47400 Petaling Jaya, Selangor, Malaysia,47400,Sungai Petani,Selangor,MY",
+            "NO 23 JALAN SENTUL JAYA 1 ,TAMAN SENTUL BAHAGIA SENTUL,51100,KUALA LUMPUR,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id4",
-            "18-3A, Glomac Centro,Jln Teratai PJU 6A,47400,Petaling Jaya,Selangor,MY",
+            "No. 3, Jalan Dato Senu 5,Taman Dato Senu,51000,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id5",
-            "G-16-8, Pangsapuri Pelangi Ara, Pju 6A Jalan Teratai, Petaling Jaya Selangor,47400,Petaling Jaya,Selangor,MY",
+            "No 47, Jalan Dato Senu 4,,Sentul,,51000,Kuala Lumpur,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id6",
-            "G11 Sri Araville, Kayu Ara, Jalan Dahlia, PJU 6A, PETALING JAYA Selangor.,47400,Petaling Jaya,Selangor,MY",
+            "No. 50 Jalan 12 Taman Dato Senu,51000,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id7",
-            "LEE ZI TIAN B-8-6 PELANGI UTAMA JALAN MASJID PJU 6A 47400 Petaling Jaya Selangor,47400,MY",
+            "NO 21A JALAN DATO SENU 12,TAMAN DATO SENU,51000,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id8",
-            "38 ,jalan 3 kampung kayu ara indah, string,47400,Petaling Jaya,Selangor,MY",
+            "no 31 jalan 13 Taman Datuk Senu, Sentul, 51000 Kua,la Lumpur, Kuala Lumpur, Malaysia,51000,Shah Alam,Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id9",
-            "19-09, Glomac Centro Serviced Apartment, Jalan Teratai PJU 6A,47400,Petaling Jaya,Selangor,MY",
+            "A-06-15 KONDOMINIUM SENTUL UTAMA JALAN DATO SENU 2,6,TAMAN DATO SENU KUALA LUMPUR.,51000,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id10",
-            "1007i, Jalan Kekwa, Kampung kayu Ara,47400,Petaling Jaya,Selangor,MY",
+            "SMK Convent Sentul, Jalan Sentul,,51000,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
         stops.add(RouteStop.simpleInstance(
             "id11",
-            "G-5-18 PANGSAPURI PELANGI ARA PJU6A JALAN TERATAI KAMPUNG SUNGAI KAYU ARA,47400,Petaling Jaya,Selangor,MY",
+            "22 Jalan 1/48F Off Lorong Sentul Bahagia 4,51100,Sentul,Wilayah Persekutuan Kuala Lumpur,MY",
             "",
             RouteStopType.DROPOFF,
             RouteStopStatus.NEW
         ))
-        stops.add(RouteStop.simpleInstance(
-            "id12",
-            "Glomac Centro, Lorong Masjid 1, Kampung Sungai Kayu Ara 1-19, 47400, Petaling Jaya, Selangor,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id13",
-            "Lot 866 lorong masjid 2 kg sg kayu ara damansara,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id14",
-            "NO32A,JALAN DAHLIA 3,PJU6A,TAMAN MAS UTAMA, 47400, Petaling Jaya, Selangor,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id15",
-            "B9-15, Boulevard Residence, Jalan Kenanga,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id16",
-            "E-10-3A Pelangi Utama, Jalan Masjid PJU 6A, Petaling Jaya,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id17",
-            "GLAMPOT SDN BHD, B-5-26 Block Bougainvillea, 10 Boulevard, Jalan Kenanga, 47400 Kayu Ara,Damansara , Pj, Selangor, Malaysia,47400,Gombak Setia .,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id18",
-            "SITI NORHAYATI MAHMOD LOT 1028-T JALAN CEMPAKA KAMPUNG SUNGAI KAYU ARA DAMANSARA JAYA 47400 Petaling Jaya Selangor,47400,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id19",
-            "10A-LOT1047, Jalan Cempaka Kampung Sungai Kayu Ara Selangor Malaysia ,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id20",
-            "C-5-41   ,   Blok Camilia, 10 Boulevard, SPRINT Expressway, Kampung Sungai Kayu Ara,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
-        stops.add(RouteStop.simpleInstance(
-            "id21",
-            "no  10  , d  residency  terrace,  jalan  anggerik,.   kampung sungai   kayu ara 47400 pj selangor,47400,Petaling Jaya,Selangor,MY",
-            "",
-            RouteStopType.DROPOFF,
-            RouteStopStatus.NEW
-        ))
+
+//        MainScope().launch {
+//            stops.forEach {
+//                try {
+//                    val response = BeansEnterpriseNetworkService.BEANS_ENTERPRISE_API!!.getSearchResponse(it.address!!, it.unit, GeoPoint(0.0, 0.0))
+//                    if (response != null && response.code() == 200) {
+//                        it.display_position = response.body()!!.data!!.getNavigationPoint()
+//                        it.position = response.body()!!.data!!.getNavigationPoint()
+//                        if (response.body()!!.data!!.routes != null
+//                            && response.body()!!.data!!.routes!!.size > 0
+//                            && response.body()!!.data!!.routes!!.get(0).destination?.country_iso3 != "MYS") {
+//                            it.status = RouteStopStatus.NOLOCATION
+//                            // Optional:
+//                            // it.display_position = null
+//                            // it.position = null
+//                        } else {
+//                            if (it.display_position == null || it.position == null) {
+//                                it.status = RouteStopStatus.NOLOCATION
+//                                it.route_display_number = 5;
+//                            } else {
+//                                it.route_display_number = 5;
+//                                it.status = RouteStopStatus.NEW
+//                            }
+//                        }
+//                    } else {
+//                        var managedResponse = ApiResponse.handleResponse(response, response.body())
+//                        it.status = RouteStopStatus.NOLOCATION
+//                    }
+//                } catch (ex: IOException) {
+//                    var managedResponse = ApiResponse.handleResponse(null, Envelope<SearchResponse>())
+//                    it.status = RouteStopStatus.NOLOCATION
+//                }
+//            }
+//
+//            stops = groupStops(stops)
+//
+//            var parentStops = ArrayList<RouteStop>()
+//            stops.forEach {
+//                if (it.address != "" && it.position != null && (it.parent_list_item_id == null || it.parent_list_item_id == "")) {
+//                    parentStops.add(it)
+//                }
+//            }
+//            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
+//            var orderedStops = ArrayList<RouteStop>()
+//            for (routeStop in optimizedParentStops.data!!.item!!) {
+//                stops.forEach {
+//                    if (it.list_item_id == routeStop.list_item_id) {
+//                        orderedStops.add(it)
+//                    }
+//                }
+//                stops.forEach {
+//                    if (it.parent_list_item_id != null && it.parent_list_item_id != "" && it.parent_list_item_id == routeStop.list_item_id) {
+//                        orderedStops.add(it)
+//                    }
+//                }
+//            }
+//
+//            stops = orderedStops
+//    }
 
         MainScope().launch {
+        var optimizedParentStops = optimizeStopList(OptimizeStopRequest(stops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
+            stops = optimizedParentStops.data!!.item!!
             stops.forEach {
-                try {
-                    val response = BeansEnterpriseNetworkService.BEANS_ENTERPRISE_API!!.getSearchResponse(it.address!!, it.unit, GeoPoint(0.0, 0.0))
-                    if (response != null && response.code() == 200) {
-                        it.display_position = response.body()!!.data!!.getNavigationPoint()
-                        it.position = response.body()!!.data!!.getNavigationPoint()
-                        if (response.body()!!.data!!.routes != null
-                            && response.body()!!.data!!.routes!!.size > 0
-                            && response.body()!!.data!!.routes!!.get(0).destination?.country_iso3 != "MYS") {
-                            it.status = RouteStopStatus.NOLOCATION
-                            // Optional:
-                            // it.display_position = null
-                            // it.position = null
-                        } else {
-                            if (it.display_position == null || it.position == null) {
-                                it.status = RouteStopStatus.NOLOCATION
-                                it.route_display_number = 5;
-                            } else {
-                                it.route_display_number = 5;
-                                it.status = RouteStopStatus.NEW
-                            }
-                        }
-                    } else {
-                        var managedResponse = ApiResponse.handleResponse(response, response.body())
-                        it.status = RouteStopStatus.NOLOCATION
-                    }
-                } catch (ex: IOException) {
-                    var managedResponse = ApiResponse.handleResponse(null, Envelope<SearchResponse>())
-                    it.status = RouteStopStatus.NOLOCATION
+                if (it.children != null && !it.children!!.isEmpty()) {
+                    it.has_apartments = true
+                    it.apartment_count = it.children!!.size
                 }
             }
-
-            stops = groupStops(stops)
-            // stops = groupStops(stops)
-
-            var parentStops = ArrayList<RouteStop>()
-            stops.forEach {
-                if (it.address != "" && it.position != null && (it.parent_list_item_id == null || it.parent_list_item_id == "")) {
-                    parentStops.add(it)
-                }
-            }
-            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(parentStops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
-            var orderedStops = ArrayList<RouteStop>()
-            for (routeStop in optimizedParentStops.data!!.item!!) {
-                stops.forEach {
-                    if (it.list_item_id == routeStop.list_item_id) {
-                        orderedStops.add(it)
-                    }
-                }
-                stops.forEach {
-                    if (it.parent_list_item_id != null && it.parent_list_item_id != "" && it.parent_list_item_id == routeStop.list_item_id) {
-                        orderedStops.add(it)
-                    }
-                }
-            }
-
-            stops = orderedStops
             routeDataViewModel?.setStops(stops)
         }
 
