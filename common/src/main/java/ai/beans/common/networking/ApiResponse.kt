@@ -40,7 +40,7 @@ object ApiResponse {
                         } catch (ex : JsonSyntaxException) {
                             env.success = false
                             val generatedError = ApiError()
-                            generatedError.code = "OOPS!"
+                            generatedError.code = "NOT_JSON_ERROR_RESPONSE"
                             generatedError.message = "Something went wrong"
                             env.error = generatedError
                         }
@@ -48,7 +48,7 @@ object ApiResponse {
                         env.success = false
                         val generatedError = ApiError()
                         generatedError.httpError = response.code()
-                        generatedError.code = "OOPS!"
+                        generatedError.code = "EMPTY_ERROR_RESPONSE"
                         generatedError.message = "Something went wrong"
                         env.error = generatedError
                     }
@@ -58,7 +58,7 @@ object ApiResponse {
                 var env = Envelope<T>()
                 env.success = false
                 val generatedError = ApiError()
-                generatedError.code = "OOPS!"
+                generatedError.code = "NULL_RESPONSE"
                 generatedError.message = "Something went wrong"
                 env.error = generatedError
                 return env
