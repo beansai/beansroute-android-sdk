@@ -42,7 +42,14 @@ class RouteStopsViewModel(application: Application) : AndroidViewModel(applicati
 
     fun setStops(allStopsIncludingChildren : ArrayList<RouteStop>) {
         this.allStopsIncludingChildren.clear()
-        this.allStopsIncludingChildren.addAll(allStopsIncludingChildren)
+        allStopsIncludingChildren.forEach {
+            this.allStopsIncludingChildren.add(it)
+            if (it.children != null && !it.children!!.isEmpty()) {
+                it.children!!.forEach {
+                    this.allStopsIncludingChildren.add(it)
+                }
+            }
+        }
         MainScope().launch {
             initStopsData()
         }

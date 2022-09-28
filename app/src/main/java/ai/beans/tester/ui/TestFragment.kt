@@ -192,9 +192,13 @@ class TestFragment : BeansFragment() {
 //    }
 
         MainScope().launch {
-        var optimizedParentStops = optimizeStopList(OptimizeStopRequest(stops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
+            var optimizedParentStops = optimizeStopList(OptimizeStopRequest(stops), GeoPoint(2.9244089,101.4580797), GeoPoint(3.168636,101.614877))
             stops = optimizedParentStops.data!!.item!!
             stops.forEach {
+                if (it.status == RouteStopStatus.NOLOCATION) {
+                    it.display_position = GeoPoint(0.0, 0.0)
+                    it.position = GeoPoint(0.0, 0.0)
+                }
                 if (it.children != null && !it.children!!.isEmpty()) {
                     it.has_apartments = true
                     it.apartment_count = it.children!!.size

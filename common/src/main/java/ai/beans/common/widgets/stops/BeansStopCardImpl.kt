@@ -112,14 +112,6 @@ open class BeansStopCardImpl : RelativeLayout, LifecycleObserver {
             }
         }
 
-        pnlActionsImpl?.infoButton!!.setOnClickListener {
-            if (actionButtonListener != null) {
-                actionButtonListener!!.onMoreInfoClicked(currentStop)
-            } else {
-                localBus?.post(ShowMoreInfo())
-            }
-        }
-
         pnlActionsImpl?.prevStopButton!!.setOnClickListener {
             if (actionButtonListener != null) {
                 actionButtonListener!!.onPrevStopClicked(currentStop)

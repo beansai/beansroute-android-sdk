@@ -7,7 +7,6 @@ import ai.beans.common.events.CollapseCard
 import ai.beans.common.events.ExpandCard
 import ai.beans.common.events.HideCard
 import ai.beans.common.events.ShowCard
-import ai.beans.common.location.LocationHolder
 import ai.beans.common.maps.renderers.StopsRendererApartmentImpl
 import ai.beans.common.ui.core.BeansFragment
 import ai.beans.common.widgets.stops.BeansStopPanelImpl
@@ -34,26 +33,20 @@ class BeansMapFragmentApartmentDetailsImpl : BeansFragment() {
     var movepinButton: RoundMapButton? = null
 
     lateinit var containerPanel : BeansStopPanelImpl
-    var locationHolder : LocationHolder? = null
     var routeStopId: String? = null
 
     var customMarkerImagesViewModel : CustomMarkerImagesViewModel?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        addressDetailsRendererApartmentImpl = StopsRendererApartmentImpl(this, savedInstanceState)
-        addressDetailsRendererApartmentImpl?.plugIn()
-
         address = arguments?.getString("ADDRESS")
         unit = arguments?.getString("UNIT")
         lat = arguments?.getString("LATITUDE")
         long = arguments?.getString("LONGITUDE")
         routeStopId = arguments?.getString("STOP_ID")
 
-        locationHolder = ViewModelProviders.of(activity!!,
-            ViewModelProvider.AndroidViewModelFactory(BeansContextContainer.application!!)).get(
-            LocationHolder::class.java)
+        addressDetailsRendererApartmentImpl = StopsRendererApartmentImpl(this, savedInstanceState)
+        addressDetailsRendererApartmentImpl?.plugIn()
 
         customMarkerImagesViewModel = ViewModelProviders.of(activity!!).get(
             CustomMarkerImagesViewModel::class.java)
