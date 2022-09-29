@@ -56,7 +56,11 @@ class BeansStopPnlAddressApartmentImpl : RelativeLayout {
     fun render(routeStop: RouteStop?) {
         routeStop?.let {
             address?.text = it.address
-            name?.text = it.unit
+            if (it.unit == "") {
+                name?.text = it.address
+            } else {
+                name?.text = it.unit
+            }
             renderMarker(routeStop)
         }
     }

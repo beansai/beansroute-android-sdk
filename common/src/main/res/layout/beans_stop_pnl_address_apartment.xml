@@ -35,11 +35,10 @@
                 android:id="@+id/unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:lineSpacingExtra="-5sp"
+                android:fontFamily="sans-serif-medium"
                 android:text="1034"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
